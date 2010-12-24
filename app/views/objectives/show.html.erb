@@ -1,0 +1,30 @@
+<p>
+  <b>Project:</b>
+  <%= link_to(@objective.project.name, @objective.project) %>
+</p>
+
+<p>
+  <b>Objective:</b>
+  <%= @objective.name %> <% unless @objective.url.blank? %> (<%= link_to(truncate_url(@objective.url), @objective.url) %>)<% end %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @objective.description %>
+</p>
+
+<p>
+  <b>Intended Start:</b>
+  <%= @objective.start %>
+</p>
+
+<p>
+  <b>Due:</b>
+  <%= @objective.due %>
+</p>
+
+<%= link_to 'Edit', edit_project_objective_path(@objective.project, @objective) %> |
+<%= link_to 'Back', project_objectives_path(@objective.project) %>
+<%= link_to 'Destroy', project_objective_path(@objective.project, @objective), :confirm => 'Are you sure?', :method => :delete %>
+
+<%= render :file => 'tasks/index' %>

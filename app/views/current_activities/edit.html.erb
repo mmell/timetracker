@@ -1,0 +1,42 @@
+<h1>Editing current_activity</h1>
+
+<div style='float: right;' class='content'>
+<h3>Adjust Minutes</h3>
+<%= form_for( @current_activity, :url => adjust_minutes_current_activity_path ) do |f| %>
+  <div class="field">
+    <%= f.label :minutes %><br />
+    <%= text_field :adjust_minutes, '', :size => 6 %>
+  </div>
+  <div class="actions">
+    <%= f.submit('Add Minutes to Start') %>
+  </div>
+<% end %>
+</div>
+
+
+<%= render 'form' %>
+
+<%= link_to 'Stop', @current_activity, :confirm => 'Are you sure?', :method => :delete %>
+
+
+<p>
+  <b>Person:</b>
+  <%= @current_activity.person.name %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= link_to(@current_activity.task.objective.project.client.name, @current_activity.task.objective.project.client) %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= link_to(@current_activity.task.objective.project.name, @current_activity.task.objective.project) %>
+</p>
+
+<p>
+  <b>Objective:</b>
+  <%= link_to(@current_activity.task.objective.name, @current_activity.task.objective) %>
+<br />
+  <%= @current_activity.task.objective.description %>
+</p>

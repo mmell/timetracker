@@ -1,0 +1,29 @@
+<h1>Listing rights</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Accessable</th>
+    <th>Accessable type</th>
+    <th>Right</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @rights.each do |right| %>
+	<tr valign='top' class='row<%= cycle(1, 2) %>'>
+    <td><%= right.person_id %></td>
+    <td><%= right.accessable_id %></td>
+    <td><%= right.accessable_type %></td>
+    <td><%= right.right %></td>
+    <td><%= link_to 'Show', right %></td>
+    <td><%= link_to 'Edit', edit_right_path(right) %></td>
+    <td><%= link_to 'Destroy', right, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Right', new_right_path %>

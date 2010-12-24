@@ -1,0 +1,28 @@
+<p>
+  <b>Person:</b>
+  <%= link_to @activity.person.name, @activity.person %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= link_to @activity.task.name, [@activity.task.objective, @activity.task] %>
+</p>
+
+<p>
+  <b>Stopped:</b>
+  <%= @activity.stopped.localtime %>
+</p>
+
+<p>
+  <b>Minutes:</b>
+  <%= @activity.minutes %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @activity.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_person_activity_path(get_user, @activity) %> |
+<%= link_to 'Destroy', [get_user, @activity], :confirm => 'Are you sure?', :method => :delete %>

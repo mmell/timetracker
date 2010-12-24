@@ -1,0 +1,38 @@
+<p>
+  <b>Person:</b>
+  <%= @current_activity.person.name %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= link_to(@current_activity.task.objective.project.client.name, @current_activity.task.objective.project.client) %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= link_to(@current_activity.task.objective.project.name, @current_activity.task.objective.project) %>
+</p>
+
+<p>
+  <b>Objective:</b>
+  <%= link_to(@current_activity.task.objective.name, @current_activity.task.objective) %>
+</p>
+
+<p>
+  <b>Task:</b> (<%= link_to(@current_activity.task.name, [@current_activity.task.objective, @current_activity.task]) %>)
+  <%= link_to(@current_activity.task.name, [@current_activity.task.objective, @current_activity.task]) %>
+</p>
+
+<p>
+  <b>Started:</b>
+  <%= @current_activity.started.localtime %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @current_activity.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_current_activity_path(@current_activity) %> |
+<%= link_to 'Back', current_activities_path %>

@@ -1,0 +1,32 @@
+<%= CSV.generate_line( ['Dates', '2010-11-23', '2010-12-14'] ) -%>
+<% 
+require 'csv'
+columns = [
+	'Objective',
+	'Task',
+	'Date',
+	'Hours',
+	'Minutes',
+	'Comment',
+]
+-%>
+<%= CSV.generate_line( columns ) -%>
+<% 
+total_minutes = 0
+@project.objectives.each { |objective| 
+	objective.tasks.each { |task| 
+		total_minutes += task.minutes -%>
+		<%= %>
+		<%= csv_row( [objective.name, task.name, 'Total', task.hours, task.minutes] ) -%>
+	<% task.activities.each { |activity|
+		data = [nil, nil, activity.stopped, nil, activity.minutes]#, activity.description]
+	-%>
+<%= csv_row(data) -%>
+<% 
+		}
+	} 
+}
+-%>
+
+<%= %>
+<%= CSV.generate_line( [nil, nil, 'Total Time', (total_minutes / 60.0), total_minutes] ) -%>

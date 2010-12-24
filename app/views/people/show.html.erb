@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<% unless @person.image_url.blank? %>
+<%= image_tag(@person.image_url, :class => 'profile_image') %>
+<% end %>
+<p>
+  <%= @person.name %>  
+  (<%= mail_to @person.email %>)
+</p>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

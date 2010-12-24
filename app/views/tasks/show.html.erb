@@ -1,0 +1,28 @@
+<p>
+  <b>Task:</b>
+  <%= @task.name %>
+</p>
+
+<p>
+  <b>Minutes:</b>
+  <%= @task.minutes %>
+</p>
+
+<p>
+  <b>Objective:</b>
+  <%= link_to(@task.objective.name, [@task.objective.project, @task.objective]) %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @task.description %>
+</p>
+
+<%= button_to('Start Activity', start_objective_task_path(@objective, @task)) %>
+
+<%= link_to 'Edit', edit_objective_task_path(@objective, @task) %> |
+<%= link_to 'Back', objective_tasks_path(@objective) %>
+<%= link_to 'Destroy', [@objective, @task], :confirm => 'Are you sure?', :method => :delete %>
+
+<h2>Activities</h2>
+<%= render :partial => 'activities/list' %>
