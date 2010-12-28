@@ -23,7 +23,7 @@ TimeTracker::Application.routes.draw do
 
   resources :current_activities do
     member do
-      post :adjust_minutes, :cancel, :restart
+      post :adjust_start, :cancel, :restart
     end
   end
      

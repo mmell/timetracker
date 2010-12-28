@@ -36,7 +36,7 @@
   <div class="field">
     <%= f.label :task_id %> (<%= link_to('Edit', [@current_activity.task.objective, @current_activity.task])%>)<br />
     <%= select_tag "current_activity[task_id]", 
-			options_from_collection_for_select(Task.all, "id", "fullname", @current_activity.task_id) 
+			options_from_collection_for_select(Task.all(:conditions => ['tasks.archived = ?', false], :include => {:objective => { :project => :client } }, :order => 'clients.name, projects.name, objectives.name'), "id", "fullname", @current_activity.task_id) 
 		%>FIXME only show users' tasks
   </div>
   <div class="field">

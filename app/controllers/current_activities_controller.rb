@@ -75,12 +75,12 @@ class CurrentActivitiesController < ApplicationController
     end
   end
 
-  def adjust_minutes
+  def adjust_start
     @current_activity = CurrentActivity.find(params[:id])
-    @current_activity.update_attributes(:started => @current_activity.started + params[:adjust_minutes].to_i )
+    @current_activity.update_attributes(:started => (@current_activity.started + params[:adjustment].to_i.minutes) )
 
     respond_to do |format|
-      format.html { redirect_to(person_activities_url(get_user)) }
+      format.html { redirect_to(edit_current_activity_url(@current_activity)) }
       format.xml  { head :ok }
     end
   end

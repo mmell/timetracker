@@ -1,6 +1,6 @@
 class ObjectivesController < ApplicationController
   
-  before_filter :get_project #, :only => [:index, :new, :show]
+  before_filter :get_project 
   
   # GET /objectives
   # GET /objectives.xml
@@ -28,7 +28,7 @@ class ObjectivesController < ApplicationController
   # GET /objectives/new
   # GET /objectives/new.xml
   def new
-    @objective = Objective.new
+    @objective = Objective.new(:project => @project)
 
     respond_to do |format|
       format.html # new.html.erb

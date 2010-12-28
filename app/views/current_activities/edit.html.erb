@@ -1,14 +1,14 @@
-<h1>Editing current_activity</h1>
+<h1>Editing Current Activity</h1>
 
 <div style='float: right;' class='content'>
-<h3>Adjust Minutes</h3>
-<%= form_for( @current_activity, :url => adjust_minutes_current_activity_path ) do |f| %>
+<h3>Adjust Start Time</h3>
+<%= form_tag( :id => @current_activity.id, :action => :adjust_start ) do |f| %>
   <div class="field">
-    <%= f.label :minutes %><br />
-    <%= text_field :adjust_minutes, '', :size => 6 %>
+    <%= label_tag( :minutes, 'Add Minutes') %><br />
+    <%= text_field_tag :adjustment, '0', :size => 6 %>
   </div>
   <div class="actions">
-    <%= f.submit('Add Minutes to Start') %>
+    <%= submit_tag('Add Minutes to Start') %>
   </div>
 <% end %>
 </div>
@@ -25,13 +25,8 @@
 </p>
 
 <p>
-  <b>Client:</b>
-  <%= link_to(@current_activity.task.objective.project.client.name, @current_activity.task.objective.project.client) %>
-</p>
-
-<p>
   <b>Project:</b>
-  <%= link_to(@current_activity.task.objective.project.name, @current_activity.task.objective.project) %>
+  <%= link_to(@current_activity.task.objective.project.fullname, @current_activity.task.objective.project) %>
 </p>
 
 <p>

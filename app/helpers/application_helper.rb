@@ -1,14 +1,9 @@
 module ApplicationHelper
-    
-  def csv_row(arr) 
-    arr.map { |e| 
-      e = e.to_s
-      if e.index(',') or e.index('"') or e.index("\n")
-        %Q{"#{e.gsub('"', '""')}"} # personally I'd rather quote all fields =mike
-      else 
-        e
-      end
-      }.join(",")
+  
+  def csv_sum_rows(column, start_row, row_ct)
+    column.upcase!
+    end_row = start_row + row_ct
+    %Q{=SUM(#{column}#{start_row}:#{column}#{end_row})}
   end
   
   def get_user
@@ -19,16 +14,16 @@ module ApplicationHelper
     current_page?(opts) ? 'current' : ''
   end
   
-  def user_time_zone
-    (get_user ? get_user.time_zone : nil)
+  def user_time_zone(user = get_user)
+    (user ? user.time_zone : nil)
   end
   
-  def user_time(t) 
-    t.in_time_zone(user_time_zone)
+  def user_time(t, user = get_user) 
+    t.in_time_zone(user_time_zone(user))
   end
   
-  def user_time_now()
-    user_time(Time.now.utc)
+  def user_time_now(user = get_user)
+    user_time(Time.now.utc, user)
   end
   
   def truncate(s, n = 24)
