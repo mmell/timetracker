@@ -16,7 +16,7 @@ class ActivitiesController < ApplicationController
   end
 
   def all
-    @activities = get_user.activities.find(:all)
+    @activities = get_user.activities.find(:all, :conditions => ["stopped > '#{(Time.now() - 31.days).strftime("%Y-%m-%d")}'"])
 
     respond_to do |format|
       format.html # all.html.erb

@@ -1,26 +1,16 @@
 TimeTracker::Application.routes.draw do
 
+  root :to => "projects#index" 
+
   get "static/index"
   get "static/legal"
 
-  root :to => "projects#index" 
-
-  resources :rights
-
-  resources :people do
-    member do
-      post :login, :logout
-      get :reports
-    end
-    
-    resources :activities do
-      collection do
-        get :all
-      end
-    end
-
+  resources :activities
+  
+  resources :clients do 
+    resources :projects
   end
-
+  
   resources :current_activities do
     member do
       post :adjust_start, :cancel, :restart
@@ -38,13 +28,25 @@ TimeTracker::Application.routes.draw do
     
   end
   
+  resources :people do
+    member do
+      post :login, :logout
+      get :reports
+    end
+    
+    resources :activities do
+      collection do
+        get :all
+      end
+    end
+
+  end
+
   resources :projects do 
     resources :objectives
   end
 
-  resources :clients do 
-    resources :projects
-  end
+#  resources :rights
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

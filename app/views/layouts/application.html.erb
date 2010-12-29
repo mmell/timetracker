@@ -7,47 +7,57 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-<div class='content' id='top'>
-	<% if get_user -%>
-	<h3><%= get_user.name %></h3>
-		<ul class='nav'>
-			<li><%= link_to("Activities Today", person_activities_path(get_user), :class => link_class(person_activities_path(get_user))) %></li>
-			<li><%= link_to("All Activities", all_person_activities_path(get_user), :class => link_class(all_person_activities_path(get_user))) %></li>
-			<li><%= link_to('Account', get_user, :class => link_class(get_user)) %></li>
-			<li><%= link_to('Reports', reports_person_path(get_user), 
-			:class => link_class(reports_person_path(get_user))) %></li>
-		</ul>
-<% end -%>
-<ul class='nav'>
-	<li><%= link_to( 'Projects', projects_path, :class => link_class(projects_path) )%></li>
-	<li><%= link_to( 'Clients', clients_path, :class => link_class(clients_path) )%></li>
-	<li><%= link_to( 'People', people_path, :class => link_class(people_path) )%></li>
-</ul></div>
-  
-<% if params[:action] == 'show' -%><div class='content' id='nav2'>
-	<h2><%= controller_name.singularize.titleize %></h2>
-	<ul class='nav'>
-	<%= render(:file => "layouts/navs/#{controller_path}/show") %>
-	<ul>
 
-</div><% end -%>
+<div class='content' id='top'>
+<% if get_user -%>
+<ul class='nav_base_horizontal' id='dependability_bar'>
+	<li><h3><%= get_user.name %></h3></li>
+	<li><%= link_to('Account', get_user, :class => link_class(get_user)) %></li>
+	<li><%= link_to('Reports', reports_person_path(get_user), 
+	:class => link_class(reports_person_path(get_user))) %></li>
+</ul>
+
+<ul class='nav_base_horizontal' id='main_nav'>
+	<li><%= link_to("Activities Today", person_activities_path(get_user), :class => link_class(person_activities_path(get_user))) %></li>
+	<li><%= link_to("Recent Activities", all_person_activities_path(get_user), :class => link_class(all_person_activities_path(get_user))) %></li>
+</ul>
+<% end -%>
+</div>
+  
+<% if get_user and get_user.current_activity -%>
+<div class='content' id='current_activity'>
+	<h3>Current Activity: 
+	<%= link_to(get_user.current_activity.task.fullname, [get_user.current_activity.task.objective, get_user.current_activity.task]) %> 
+	(<%= user_time(get_user.current_activity.started, get_user).strftime('%I:%M %p').downcase %> / <%= get_user.current_activity.minutes %> min)</h3>
+<ul class='nav_base_horizontal' id='current_activity_nav'>
+	<li><%= link_to 'Stop', get_user.current_activity, :confirm => 'Are you sure?', :method => :delete %></li>
+	<li><%= link_to 'Cancel', cancel_current_activity_path(get_user.current_activity), :confirm => 'Are you sure you want to Cancel?', :method => :post %></li>
+	<li><%= link_to 'Restart', restart_current_activity_path(get_user.current_activity), :confirm => 'Are you sure Restart the timer?', :method => :post %></li>
+	<li><%= link_to 'Edit', edit_current_activity_path(get_user.current_activity) %></li>
+</ul>
+</div>
+<% end -%>
+
+<div class='content' id='left_col'>
+	<ul class='nav_base_vertical' id='left_nav'>
+	<li><%= link_to( 'My Projects', projects_path, :class => link_class(projects_path) )%></li>
+	<li><%= link_to( 'My Clients', clients_path, :class => link_class(clients_path) )%></li>
+	<li><%= link_to( 'My People', people_path, :class => link_class(people_path) )%></li>
+</ul>   
+</div>
 
 <div class='content' id='middle'>
 
 <% if notice %><div class='notice'><%= notice %></div><% end %>
 <% if alert %><div class='alert'><%= alert %></div><% end %>
 
-	<% if get_user and get_user.current_activity -%>
-	<div class='content'>
-		<h3>Current Activity:<br /><%= get_user.current_activity.task.fullname %> (<%= get_user.current_activity.minutes %> min)</h3>
-	<ul class='nav'>
-		<li><%= link_to 'Stop Current Activity', get_user.current_activity, :confirm => 'Are you sure?', :method => :delete %></li>
-		<li><%= link_to 'Cancel', cancel_current_activity_path(get_user.current_activity), :confirm => 'Are you sure you want to Cancel?', :method => :post %></li>
-		<li><%= link_to 'Restart', restart_current_activity_path(get_user.current_activity), :confirm => 'Are you sure Restart the timer?', :method => :post %></li>
-		<li><%= link_to 'Edit', edit_current_activity_path(get_user.current_activity) %></li>
-	</ul>
-	</div>
-	<% end -%>
+<% if params[:action] == 'show' -%>
+<div id='show_nav'>
+<ul class='nav_base_horizontal' id='nav'>
+<%= render(:file => "layouts/navs/#{controller_path}/show") %>
+<ul>
+</div>
+<% end -%>
 
 <%= yield %>
 

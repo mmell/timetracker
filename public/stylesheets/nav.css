@@ -1,0 +1,103 @@
+/* nav_base 
+thanks http://css.maxdesign.com.au/floatutorial/tutorial0613.htm
+*/
+ul.nav_base_horizontal {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+ul.nav_base_horizontal li { 
+  display: inline;
+  font: 13px Arial, Helvetica, sans-serif; 
+  display: inline;
+  list-style-type: none; 
+}
+
+ul.nav_base_horizontal li a {
+  float: left;
+  width: 100px;
+  color: #fff;
+  background-color: #7C7B76;
+  margin: 0px 1px; 
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+ul.nav_base_horizontal li a:hover, ul.nav_base_horizontal li a.current { background-color: #ff9933; }
+/* nav_base_horizontal */
+
+/* nav_base_vertical */
+ul.nav_base_vertical {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+  float: left;
+  width: 100%;
+}
+
+ul.nav_base_vertical li {
+  padding: 0px;
+  margin: 0px;
+}
+
+ul.nav_base_vertical li a {
+  margin: 5px 0px;
+  float: left;
+  width: 5em;
+  color: #fff;
+  background-color: #7C7B76;
+  padding: 6px 12px 8px 12px; 
+  text-decoration: none;
+}
+
+ul.nav_base_vertical li a:hover, ul.nav_base_vertical li a.current { background-color: #ff9933; }
+/* nav_base_vertical */
+
+/* dependability_bar */
+ul#dependability_bar { }
+
+ul#dependability_bar li a {
+  -moz-border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
+  float: right;
+}
+/* dependability_bar */
+
+/* nav */
+ul#main_nav { 
+  border-width: 2px 0px 0px 0px; 
+  border-color: #7C7B76; 
+  border-style: solid;
+}
+ul#main_nav li a { 
+  -moz-border-radius: 0px 0px 8px 8px;
+  border-radius: 0px  0px 8px 8px;
+}
+/* nav */
+
+/* left_nav */
+ul#left_nav {}
+
+ul#left_nav li a {
+  width: 100px;
+  -moz-border-radius: 0px 8px 8px 0px;
+  border-radius: 0px 8px 8px 0px;
+}
+/* left_nav */
+
+/* current_activity_nav */
+ul#current_activity_nav {
+  border-width: 2px 0px 0px 0px; 
+  border-color: #7C7B76; 
+  border-style: solid;
+}
+
+ul#current_activity_nav li a {
+  width: 100px;
+  -moz-border-radius: 0px 0px 8px 8px;
+  border-radius: 0px 0px 8px 8px;
+}
+/* current_activity_nav */
