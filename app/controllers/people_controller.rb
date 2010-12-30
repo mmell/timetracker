@@ -17,12 +17,12 @@ class PeopleController < ApplicationController
     @project = Project.find(params[:project_id]) # FIXME: add security
     @report_user_id = get_user.id
     activities = Activity.find(:all, 
-      :conditions => ["activities.stopped > ? and activities.stopped < ? and activities.person_id = ? and objectives.project_id = ?", 
-        @start_date, @end_date, @report_user_id, @project],
+      :conditions => ["activities.stopped > ? and activities.stopped < ? and objectives.project_id = ? and activities.person_id = ?", 
+        @start_date, @end_date, @project, @report_user_id],
       :include => { :task => :objective },
       :order => "objectives.name, tasks.name, stopped DESC"
     )
-    report = Reports::CSV.new(@start_date, @end_date, activities )
+    report = Reports::CSVReport.new(@start_date, @end_date, activities )
     send_data(report.render, 
       :filename => "Report_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_#{@end_date.strftime('%Y-%m-%d')}.csv",
       :disposition => 'attachment', # default

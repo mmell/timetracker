@@ -69,10 +69,12 @@
 	<li><%= link_to('Legal', static_legal_path ) %></li>
 </ul>
 </div>
-<SCRIPT LANGUAGE = "JavaScript">
+<% if get_user.current_activity -%>
+<script language="javascript">
 <!--
-StartTimer(<%= get_user.current_activity.minutes %>)
+StartCurrentActivityTimer(<%= get_user.current_activity.minutes %>)
 //-->
-</SCRIPT>
+</script>
+<% end -%>
 </body>
 </html>

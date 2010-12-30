@@ -13,11 +13,11 @@
 ActiveRecord::Schema.define(:version => 20101215191857) do
 
   create_table "activities", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "task_id"
+    t.integer  "person_id", :default => 0, :null => false
+    t.integer  "task_id", :default => 0, :null => false
     t.datetime "stopped"
     t.integer  "minutes"
-    t.text     "description"
+    t.text     "description", :default => '', :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,18 +31,18 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "current_activities", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "task_id"
+    t.integer  "person_id", :default => 0, :null => false
+    t.integer  "task_id", :default => 0, :null => false
     t.datetime "started"
-    t.text     "description"
+    t.text     "description", :default => '', :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "objectives", :force => true do |t|
-    t.integer  "project_id"
+    t.integer  "project_id", :default => 0, :null => false
     t.string   "name"
-    t.text     "description"
+    t.text     "description", :default => '', :null => false
     t.string   "url"
     t.datetime "start"
     t.datetime "due"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "projects", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "client_id", :default => 0, :null => false
     t.string   "name"
     t.string   "url"
     t.datetime "created_at"
@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "rights", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "accessable_id"
+    t.integer  "person_id", :default => 0, :null => false
+    t.integer  "accessable_id", :default => 0, :null => false
     t.string   "accessable_type"
     t.string   "right"
     t.datetime "created_at"
@@ -79,9 +79,9 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "tasks", :force => true do |t|
-    t.integer  "objective_id"
+    t.integer  "objective_id", :default => 0, :null => false
     t.string   "name"
-    t.text     "description"
+    t.text     "description", :default => '', :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "archived",     :default => false, :null => false

@@ -14,6 +14,7 @@ class Activity < ActiveRecord::Base
   
   def defaults
     self.stopped ||= DateTime.now.utc
+    self.description = self.description.strip
   end
   
   def local_stop_time

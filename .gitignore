@@ -5,3 +5,6 @@ tmp/**/*
 .DS_Store
 thin*
 test.rb
+
+# temp
+lib/tasks/temp*

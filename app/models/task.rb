@@ -8,6 +8,12 @@ class Task < ActiveRecord::Base
   validates_numericality_of :objective_id
   validates_associated :objective
   
+  before_save :defaults
+  
+  def defaults
+    self.description = self.description.strip
+  end
+  
   def fullname
     "#{self.objective.fullname}::#{self.name}"
   end

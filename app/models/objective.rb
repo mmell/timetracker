@@ -7,6 +7,12 @@ class Objective < ActiveRecord::Base
   validates_numericality_of :project_id
   validates_associated :project
 
+  before_save :defaults
+  
+  def defaults
+    self.description = self.description.strip
+  end
+  
   def fullname
     "#{project.fullname}::#{self.name}"
   end

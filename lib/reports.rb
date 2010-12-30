@@ -1,3 +1,3 @@
 module Reports
-  require 'reports/csv.rb'
+  require 'reports/csv_report.rb'
 end
