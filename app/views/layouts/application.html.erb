@@ -28,7 +28,7 @@
 <div class='content' id='current_activity'>
 	<h3>Current Activity: 
 	<%= link_to(get_user.current_activity.task.fullname, [get_user.current_activity.task.objective, get_user.current_activity.task]) %> 
-	(<%= user_time(get_user.current_activity.started, get_user).strftime('%I:%M %p').downcase %> / <%= get_user.current_activity.minutes %> min)</h3>
+	(<%= get_user.local_time(get_user.current_activity.started).strftime('%I:%M %p').downcase %> / <span id='activity_timer_minutes'>0</span> min)</h3>
 <ul class='nav_base_horizontal' id='current_activity_nav'>
 	<li><%= link_to 'Stop', get_user.current_activity, :confirm => 'Are you sure?', :method => :delete %></li>
 	<li><%= link_to 'Cancel', cancel_current_activity_path(get_user.current_activity), :confirm => 'Are you sure you want to Cancel?', :method => :post %></li>
@@ -69,6 +69,10 @@
 	<li><%= link_to('Legal', static_legal_path ) %></li>
 </ul>
 </div>
-
+<SCRIPT LANGUAGE = "JavaScript">
+<!--
+StartTimer(<%= get_user.current_activity.minutes %>)
+//-->
+</SCRIPT>
 </body>
 </html>

@@ -23,7 +23,7 @@ columns = [
 <%= %>
 <%= CSV.generate_line( [objective.name, task.name, nil, task.hours, nil, task.minutes] ).html_safe -%>
 	<% task.activities.each { |activity| -%>
-<%= CSV.generate_line([nil, nil, user_time(activity.stopped, @user), nil, activity.minutes, nil, activity.description]).html_safe -%>
+<%= CSV.generate_line([nil, nil, activity.local_stop_time, nil, activity.minutes, nil, activity.description]).html_safe -%>
 	<% 
 		}
 	} 

@@ -1,29 +1,11 @@
 module ApplicationHelper
   
-  def csv_sum_rows(column, start_row, row_ct)
-    column.upcase!
-    end_row = start_row + row_ct
-    %Q{=SUM(#{column}#{start_row}:#{column}#{end_row})}
-  end
-  
   def get_user
     controller.get_user
   end
   
   def link_class(opts)
     current_page?(opts) ? 'current' : ''
-  end
-  
-  def user_time_zone(user = get_user)
-    (user ? user.time_zone : nil)
-  end
-  
-  def user_time(t, user = get_user) 
-    t.in_time_zone(user_time_zone(user))
-  end
-  
-  def user_time_now(user = get_user)
-    user_time(Time.now.utc, user)
   end
   
   def truncate(s, n = 24)

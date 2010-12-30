@@ -1,0 +1,22 @@
+<h1>Reports for <%= get_user.name %></h1>
+
+<%= form_tag( ) do |f| %>
+<div class="field">
+  <%= label_tag( :from) %><br />
+  <%= select_date(@start_date, :prefix => :from) %>
+</div>
+<div class="field">
+  <%= label_tag( :until) %> (Not including)<br />
+  <%= select_date(@end_date, :prefix => :until) %>
+</div>
+<div class="field">
+  <%= label_tag( :project) %><br />
+  <%= select_tag "project_id", 
+		options_from_collection_for_select(Project.all(:order => :name), "id", "name", @project) 
+		%>
+</div>
+  <div class="actions">
+    <%= submit_tag('Get Report') %>
+  </div>
+<% end %>
+</div>

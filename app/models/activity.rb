@@ -13,7 +13,11 @@ class Activity < ActiveRecord::Base
   before_save :defaults
   
   def defaults
-    self.stopped ||= DateTime.now
+    self.stopped ||= DateTime.now.utc
+  end
+  
+  def local_stop_time
+    person.local_time(stopped)
   end
   
 end

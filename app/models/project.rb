@@ -15,4 +15,8 @@ class Project < ActiveRecord::Base
     "#{client.name}::#{self.name}"
   end
   
+  def report_name
+    name.gsub(/[^a-zA-Z0-9\._]+/, '_')
+  end
+  
 end

@@ -6,4 +6,9 @@ class Person < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :email
   
+  def local_time(t) 
+    t.in_time_zone(time_zone)
+  end
+  
+
 end

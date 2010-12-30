@@ -1,5 +1,5 @@
 <div style='overflow: hidden; width: 100%;'>
-	<h3 style='float: right; width: 45%;'>Time Now: <%= user_time_now %></h3>
+	<h3 style='float: right; width: 45%;'>Time Now: <%= get_user.local_time(Time.now.utc) %></h3>
 	<h3 style='float: left; width: 55%;'>Recorded Hours: <%= (@minutes_today / 60.0).round_to_two %></h3>
 </div>
 

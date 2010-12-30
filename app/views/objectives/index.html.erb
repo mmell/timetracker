@@ -17,8 +17,8 @@
     <td colspan='2'><%= link_to objective.name, [@project, objective] %></td>
     <td align='right'><%= objective.minutes %></td>
     <td><%= objective.url.blank? ? '' : link_to(truncate_url(objective.url), objective.url) %></td>
-    <td><%= user_time(objective.start) %></td>
-    <td><%= user_time(objective.due) %></td>
+    <td><%= get_user.local_time(objective.start) %></td>
+    <td><%= get_user.local_time(objective.due) %></td>
   </tr>
 <% unless objective.description.blank? %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>

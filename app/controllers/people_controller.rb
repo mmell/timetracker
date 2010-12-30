@@ -1,7 +1,35 @@
 class PeopleController < ApplicationController
+  require 'reports' 
   
   before_filter :get_person, :require_user, :except => [:login, :index, :new, :create]
     
+  def reports
+    unless params[:project_id]
+      d = Date.current.day
+      delta = ( d < 15 ? d : d - 15)
+      @end_date = Date.current() - delta.days
+      @start_date = @end_date - 14.days
+      @project = (get_user.tasks.nil? ? nil : get_user.tasks.last.objective.project_id)
+      return
+    end
+    @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")
+    @start_date = Time.parse("#{params[:from][:year]}-#{params[:from][:month]}-#{params[:from][:day]}")
+    @project = Project.find(params[:project_id]) # FIXME: add security
+    @report_user_id = get_user.id
+    activities = Activity.find(:all, 
+      :conditions => ["activities.stopped > ? and activities.stopped < ? and activities.person_id = ? and objectives.project_id = ?", 
+        @start_date, @end_date, @report_user_id, @project],
+      :include => { :task => :objective },
+      :order => "objectives.name, tasks.name, stopped DESC"
+    )
+    report = Reports::CSV.new(@start_date, @end_date, activities )
+    send_data(report.render, 
+      :filename => "Report_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_#{@end_date.strftime('%Y-%m-%d')}.csv",
+      :disposition => 'attachment', # default
+      :type => 'application/octet-stream' # default
+    )
+  end
+  
   # GET /people
   # GET /people.xml
   def index
