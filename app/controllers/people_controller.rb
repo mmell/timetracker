@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
     )
     report = Reports::CSVReport.new(@start_date, @end_date, activities )
     send_data(report.render, 
-      :filename => "Report_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_#{@end_date.strftime('%Y-%m-%d')}.csv",
+      :filename => "Report_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.csv",
       :disposition => 'attachment', # default
       :type => 'application/octet-stream' # default
     )

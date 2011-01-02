@@ -46,7 +46,7 @@ class CSVReport # the name CSV conflicts with the CSV lib?
       nil, 
       nil, 
       nil, 
-      task.objective.url
+      [task.objective.url, task.objective.description].delete_if { |e| e.blank? }.join(" : ")
     ] ) 
   end
   
@@ -82,7 +82,7 @@ class CSVReport # the name CSV conflicts with the CSV lib?
       nil, 
       nil, 
       nil, 
-      CSVReport.csv_sum_rows(MinuteColumn, @activity_row1, @current_row -2), 
+      CSVReport.csv_sum_rows(MinuteColumn, @activity_row1, @current_row -3), 
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)}
     ] )
     generate_blank_line
@@ -111,6 +111,7 @@ class CSVReport # the name CSV conflicts with the CSV lib?
 
       generate_activity_line(activity)
     } 
+    generate_task_totals_line(task) # totals for the last task need to be written
 
     generate_final_totals_lines
   end
