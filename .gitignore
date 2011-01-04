@@ -7,6 +7,8 @@ thin*
 test.rb
 
 vendor/cache
+db/seeds.rb
+config/database.yml
 
 # temp
 lib/tasks/temp*
