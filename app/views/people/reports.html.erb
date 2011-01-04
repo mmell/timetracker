@@ -6,13 +6,19 @@
   <%= select_date(@start_date, :prefix => :from) %>
 </div>
 <div class="field">
-  <%= label_tag( :until) %> (Not including)<br />
+  <%= label_tag( :through) %><br />
   <%= select_date(@end_date, :prefix => :until) %>
 </div>
 <div class="field">
   <%= label_tag( :project) %><br />
   <%= select_tag "project_id", 
 		options_from_collection_for_select(Project.all(:order => "clients.name, projects.name", :include => :client), "id", "fullname", @project) 
+		%>
+</div>
+<div class="field">
+  <%= label_tag( :format) %><br />
+  <%= select_tag "format", 
+		options_for_select(Reports::Formats) 
 		%>
 </div>
   <div class="actions">

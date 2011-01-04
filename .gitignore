@@ -6,5 +6,7 @@ tmp/**/*
 thin*
 test.rb
 
+vendor/cache
+
 # temp
 lib/tasks/temp*

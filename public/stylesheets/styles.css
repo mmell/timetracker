@@ -18,7 +18,7 @@ div.content {
   background-color: #fafafa;
 }
 div#top {
-  margin: 0px 40px;
+  margin: 0px 40px 10px 40px;
   padding: 0px;
   border-width: 0px 1px 1px 1px;
   -moz-border-radius: 0px 0px 8px 8px;
@@ -26,7 +26,7 @@ div#top {
   height: 120px;
 }
 div#current_activity {
-  margin: 10px 40px;
+  margin: 0px 40px 10px 40px;
   border-width: 1px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -36,7 +36,7 @@ div#current_activity h4, div#current_activity h3 {
   margin: 0px;
 }
 div#middle {
-  margin: 10px 40px 10px 185px;
+  margin: 0px 40px 10px 185px;
 }
 div#left_col {
   float: left;
@@ -51,7 +51,7 @@ div#show_nav {
   height: 50px;
 }
 div#bottom {
-  margin: 10px 40px;
+  margin: 0px 40px 10px 40px;
   padding: 20px;
   height: 50px;
 }

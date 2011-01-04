@@ -13,4 +13,11 @@ class Client < ActiveRecord::Base
     self.name
   end
   
+  def work_categories
+    # FIXME these can be db items if any client wants other values
+    {
+      'D' => 'Development', 'M' => 'Maintenance'
+    }
+  end
+  
 end

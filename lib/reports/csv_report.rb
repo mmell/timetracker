@@ -1,6 +1,5 @@
 module Reports
-class CSVReport # the name CSV conflicts with the CSV lib?
-  require 'csv'
+class CSVReport < Base # the name CSV conflicts with the CSV lib?
 
   MinuteColumn = 'D'
   MinuteTotalColumn = 'E'
@@ -14,32 +13,36 @@ class CSVReport # the name CSV conflicts with the CSV lib?
     'Notes',
   ]
 
+  def self.file_ext
+    'csv'
+  end
+  
+  def file_ext
+    CSVReport.file_ext
+  end
+  
   def self.csv_sum_rows(column, start_row, end_row)
     column.upcase!
     %Q{=SUM(#{column}#{start_row}:#{column}#{end_row})}
   end
   
-  def generate_line( columns )
+  def add_line( line_array )
     @current_row += 1
-    @data << CSV.generate_line( columns )
+    @lines << line_array
   end
   
-  def generate_blank_line
-    generate_line([''])  
-  end
-    
-  def generate_header_lines(start_date, end_date)
-    generate_line( [
+  def add_header_lines
+    add_line( [
       'Dates', 
-      "From #{start_date.strftime('%Y-%m-%d')}", 
-      "Until #{end_date.strftime('%Y-%m-%d')}"
+      "From #{@start_date.strftime('%Y-%m-%d')}", 
+      "Until #{@end_date.strftime('%Y-%m-%d')}"
     ] )
-    generate_blank_line
-    generate_line( Columns ) 
+    add_blank_line
+    add_line( Columns ) 
   end
     
-  def generate_task_line(task)
-    generate_line( [
+  def add_task_line(task)
+    add_line( [
       task.objective.name, 
       task.name, 
       nil, 
@@ -50,8 +53,8 @@ class CSVReport # the name CSV conflicts with the CSV lib?
     ] ) 
   end
   
-  def generate_task_totals_line(task)
-    generate_line( [
+  def add_task_totals_line(task)
+    add_line( [
       nil, 
       nil, 
       'Task Total', 
@@ -61,8 +64,8 @@ class CSVReport # the name CSV conflicts with the CSV lib?
     ] )
   end
   
-  def generate_activity_line(activity)
-    generate_line( [
+  def add_activity_line(activity)
+    add_line( [
       nil, 
       nil, 
       activity.local_stop_time, 
@@ -74,10 +77,10 @@ class CSVReport # the name CSV conflicts with the CSV lib?
     @activity_row1 ||= @current_row
   end
   
-  def generate_final_totals_lines()
-    generate_blank_line
-    generate_blank_line
-    generate_line( [
+  def add_final_totals_lines()
+    add_blank_line
+    add_blank_line
+    add_line( [
       'Total', 
       nil, 
       nil, 
@@ -85,15 +88,13 @@ class CSVReport # the name CSV conflicts with the CSV lib?
       CSVReport.csv_sum_rows(MinuteColumn, @activity_row1, @current_row -3), 
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)}
     ] )
-    generate_blank_line
-    generate_line( ['Report generated at', Time.now.to_s] )
+    add_blank_line
+    add_line( ['Report generated at', Time.now.to_s] )
   end
   
   def initialize(start_date, end_date, activities)
-    @data = []
-    @current_row = 0
-
-    generate_header_lines(start_date, end_date)
+    super(start_date, end_date, activities)
+    add_header_lines
 
     task = nil
     activities.each { |activity|
@@ -101,23 +102,23 @@ class CSVReport # the name CSV conflicts with the CSV lib?
       if task != activity.task
         if !task.nil?
           # write the previous task's totals
-          generate_task_totals_line(task)
+          add_task_totals_line(task)
         end
         task = activity.task
-        generate_blank_line
-        generate_task_line(task)
+        add_blank_line
+        add_task_line(task)
         @task_activity_row1 = @current_row +1
       end
 
-      generate_activity_line(activity)
+      add_activity_line(activity)
     } 
-    generate_task_totals_line(task) # totals for the last task need to be written
+    add_task_totals_line(task) # totals for the last task need to be written
 
-    generate_final_totals_lines
+    add_final_totals_lines
   end
   
   def render
-    @data.join('')
+    @lines.map { |e| CSV.generate_line( e ) }.join('')
   end
   
 end

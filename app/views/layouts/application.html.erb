@@ -69,7 +69,7 @@
 	<li><%= link_to('Legal', static_legal_path ) %></li>
 </ul>
 </div>
-<% if get_user.current_activity -%>
+<% if get_user and get_user.current_activity -%>
 <script language="javascript">
 <!--
 StartCurrentActivityTimer(<%= get_user.current_activity.minutes %>)

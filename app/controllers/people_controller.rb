@@ -5,10 +5,16 @@ class PeopleController < ApplicationController
     
   def reports
     unless params[:project_id]
-      d = Date.current.day
-      delta = ( d < 15 ? d : d - 15)
-      @end_date = Date.current() - delta.days
-      @start_date = @end_date - 14.days
+      current_day = Date.current.day
+      if current_day < 15 
+        delta = current_day 
+        @end_date = Date.current() - delta.days # last day of the last month
+        @start_date = @end_date - 14.days # the 15th of the previous month # FIXME
+      else
+        delta = current_day - 15
+        @end_date = Date.current() - delta.days # first day of this month
+        @start_date = @end_date - 14.days # the 1st of the previous month # FIXME
+      end
       @project = (get_user.tasks.nil? ? nil : get_user.tasks.last.objective.project_id)
       return
     end
@@ -18,13 +24,13 @@ class PeopleController < ApplicationController
     @report_user_id = get_user.id
     activities = Activity.find(:all, 
       :conditions => ["activities.stopped > ? and activities.stopped < ? and objectives.project_id = ? and activities.person_id = ?", 
-        @start_date, @end_date, @project, @report_user_id],
+        @start_date, @end_date + 1.day, @project, @report_user_id],
       :include => { :task => :objective },
       :order => "objectives.name, tasks.name, stopped DESC"
     )
-    report = Reports::CSVReport.new(@start_date, @end_date, activities )
+    report = "Reports::#{params[:format]}".constantize.new(@start_date, @end_date, activities )
     send_data(report.render, 
-      :filename => "Report_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.csv",
+      :filename => "#{params[:format]}_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.#{report.file_ext}",
       :disposition => 'attachment', # default
       :type => 'application/octet-stream' # default
     )

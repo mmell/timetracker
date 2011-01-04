@@ -21,4 +21,8 @@ class Objective < ActiveRecord::Base
     Activity.sum(:minutes, :conditions => "#{self.id}=tasks.objective_id", :include => :task )
   end
   
+  def work_category
+    'M'
+  end
+  
 end

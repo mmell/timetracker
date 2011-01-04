@@ -18,7 +18,11 @@
   <div class="field">
     <%= f.label :task_id %><br />
     <%= select_tag "activity[task_id]", 
-			options_from_collection_for_select(get_user.tasks.active, "id", "fullname", @activity.task_id) 
+			options_from_collection_for_select(Task.all( # FIXME hide archived and other users' tasks 
+					:order => "clients.name, projects.name, objectives.name, tasks.name", 
+					:include => {:objective => { :project => :client}} 
+				), 
+				"id", "fullname", @activity.task_id) 
 		%>
   </div>
   <div class="field">

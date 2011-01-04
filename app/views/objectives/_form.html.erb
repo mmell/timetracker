@@ -13,7 +13,9 @@
 
   <div class="field">
     <%= f.label :project_id %>
-    <strong><%= @objective.project.name %></strong>
+	  <%= select_tag "objective[project_id]", 
+			options_from_collection_for_select(Project.all(:order => "clients.name, projects.name", :include => :client), "id", "fullname", @objective.project_id) 
+			%>
   </div>
   <div class="field">
     <%= f.label :name %><br />
