@@ -1,3 +1,3 @@
 <h1>Recent Activities for <%= get_user.name %></h1>
 
-<%= render :partial => 'activities/list' %>
+<%= render :partial => 'activities/list', :collection => @activities %>

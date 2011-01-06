@@ -5,4 +5,4 @@
 
 <h1>Activities Today for <%= get_user.name %></h1>
 
-<%= render :partial => 'activities/list' %>
+<%= render :partial => 'activities/list', :collection => @activities %>

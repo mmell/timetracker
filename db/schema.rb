@@ -10,16 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215191857) do
+ActiveRecord::Schema.define(:version => 20110106183154) do
 
   create_table "activities", :force => true do |t|
-    t.integer  "person_id", :default => 0, :null => false
-    t.integer  "task_id", :default => 0, :null => false
+    t.integer  "person_id",   :default => 0, :null => false
     t.datetime "stopped"
     t.integer  "minutes"
-    t.text     "description", :default => '', :null => false
+    t.text     "description",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
   end
 
   create_table "clients", :force => true do |t|
@@ -31,24 +31,12 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "current_activities", :force => true do |t|
-    t.integer  "person_id", :default => 0, :null => false
-    t.integer  "task_id", :default => 0, :null => false
+    t.integer  "person_id",   :default => 0, :null => false
     t.datetime "started"
-    t.text     "description", :default => '', :null => false
+    t.text     "description",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "objectives", :force => true do |t|
-    t.integer  "project_id", :default => 0, :null => false
-    t.string   "name"
-    t.text     "description", :default => '', :null => false
-    t.string   "url"
-    t.datetime "start"
-    t.datetime "due"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "archived",    :default => false, :null => false
+    t.integer  "project_id"
   end
 
   create_table "people", :force => true do |t|
@@ -61,30 +49,23 @@ ActiveRecord::Schema.define(:version => 20101215191857) do
   end
 
   create_table "projects", :force => true do |t|
-    t.integer  "client_id", :default => 0, :null => false
-    t.string   "name"
-    t.string   "url"
+    t.integer  "client_id",   :default => 0,     :null => false
+    t.string   "name",        :default => "",    :null => false
+    t.string   "url",         :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",   :default => false, :null => false
+    t.boolean  "archived",    :default => false, :null => false
+    t.text     "description",                    :null => false
+    t.integer  "parent_id"
   end
 
   create_table "rights", :force => true do |t|
-    t.integer  "person_id", :default => 0, :null => false
-    t.integer  "accessable_id", :default => 0, :null => false
+    t.integer  "person_id",       :default => 0, :null => false
+    t.integer  "accessable_id",   :default => 0, :null => false
     t.string   "accessable_type"
     t.string   "right"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "tasks", :force => true do |t|
-    t.integer  "objective_id", :default => 0, :null => false
-    t.string   "name"
-    t.text     "description", :default => '', :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "archived",     :default => false, :null => false
   end
 
 end

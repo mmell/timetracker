@@ -20,17 +20,7 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
   def file_ext
     CSVReport.file_ext
   end
-  
-  def self.csv_sum_rows(column, start_row, end_row)
-    column.upcase!
-    %Q{=SUM(#{column}#{start_row}:#{column}#{end_row})}
-  end
-  
-  def add_line( line_array )
-    @current_row += 1
-    @lines << line_array
-  end
-  
+    
   def add_header_lines
     add_line( [
       'Dates', 
@@ -59,7 +49,7 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
       nil, 
       'Task Total', 
       nil, 
-      CSVReport.csv_sum_rows(MinuteColumn, @task_activity_row1, @current_row),
+      csv_sum_rows(MinuteColumn, @task_activity_row1, @current_row),
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)} 
     ] )
   end
@@ -85,7 +75,7 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
       nil, 
       nil, 
       nil, 
-      CSVReport.csv_sum_rows(MinuteColumn, @activity_row1, @current_row -3), 
+      csv_sum_rows(MinuteColumn, @activity_row1, @current_row -3), 
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)}
     ] )
     add_blank_line

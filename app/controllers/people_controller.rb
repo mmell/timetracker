@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
         @end_date = Date.current() - delta.days # first day of this month
         @start_date = @end_date - 14.days # the 1st of the previous month # FIXME
       end
-      @project = (get_user.tasks.nil? ? nil : get_user.tasks.last.objective.project_id)
+      @project = (get_user.project.nil? ? nil : get_user.projects.last.id)
       return
     end
     @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")

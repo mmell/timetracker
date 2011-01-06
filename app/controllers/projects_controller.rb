@@ -16,9 +16,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   # GET /projects/1.xml
-  def show
-    @objectives = @project.objectives.find(:all, :conditions => ["archived = ?", false])
-    
+  def show   
     respond_to do |format|
       format.html # show.html.erb
       format.csv { self.class.layout nil } # must specify layout because we speced admin.html.erb above
@@ -29,7 +27,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.xml
   def new
-    @project = Project.new
+    @project = Project.new(:client_id => params[:client_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -79,6 +77,25 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def start
+    @current_activity = CurrentActivity.new(
+      :started => Time.now,
+      :person_id => get_user.id,
+      :project_id => params[:id]
+    )
+
+    respond_to do |format|
+      if @current_activity.save
+        format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => 'Current activity was successfully created.') }
+        format.xml  { render :xml => @current_activity, :status => :created, :location => @current_activity }
+      else
+        task = Task.find(params[:id])
+        format.html { redirect_to([@objective, task], :notice => @current_activity.errors) }
+        format.xml  { render :xml => @current_activity.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

@@ -16,17 +16,6 @@ TimeTracker::Application.routes.draw do
       post :adjust_start, :cancel, :restart
     end
   end
-     
-#  resources :tasks
-  
-  resources :objectives do
-    resources :tasks do
-      member do
-        post :start
-      end
-    end
-    
-  end
   
   resources :people do
     member do
@@ -42,10 +31,12 @@ TimeTracker::Application.routes.draw do
 
   end
 
-  resources :projects do 
-    resources :objectives
+  resources :projects do
+    member do
+      post :start
+    end
   end
-
+  
 #  resources :rights
 
   # The priority is based upon order of creation:

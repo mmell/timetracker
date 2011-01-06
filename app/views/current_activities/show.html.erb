@@ -5,12 +5,12 @@
 
 <p>
   <b>Client:</b>
-  <%= link_to(@current_activity.task.objective.project.client.name, @current_activity.task.objective.project.client) %>
+  <%= link_to(@current_activity.project.client.name, @current_activity.project.client) %>
 </p>
 
 <p>
   <b>Project:</b>
-  <%= link_to(@current_activity.task.objective.project.name, @current_activity.task.objective.project) %>
+  <%= link_to(@current_activity.project.name, @current_activity.project) %>
 </p>
 
 <p>

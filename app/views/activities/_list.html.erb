@@ -1,7 +1,6 @@
 <table>
   <tr>
-    <th>Objective</th>
-    <th>Task</th>
+    <th>Project</th>
     <th>Stopped</th>
     <th>Minutes</th>
     <th></th>
@@ -9,16 +8,12 @@
     <th></th>
   </tr>
 
-<% @activities.each do |activity| %>
+<% activities.each do |activity| %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
-    <td><%= link_to(activity.task.objective.project.fullname, activity.task.objective.project) %>
-			<br />
-			<%= link_to(activity.task.objective.name, [activity.task.objective.project, activity.task.objective]) %>
-		</td>
-    <td><%= link_to(activity.task.name, [activity.task.objective, activity.task]) %></td>
+    <td><%= project_cookie_crumbs(project)) %></td>
     <td><%= activity.stopped.localtime %></td>
     <td align='right'><%= activity.minutes %></td>
-    <td><%= button_to('Start', start_objective_task_path(activity.task.objective, activity.task)) %></td>
+    <td><%= button_to('Start', start_project_path(activity.project)) %></td>
     <td><%= link_to 'Edit', edit_person_activity_path(get_user, activity) %></td>
   </tr>
 <% unless activity.description.blank? %>

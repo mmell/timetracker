@@ -7,7 +7,7 @@ module Reports
       @lines, @current_row = [], 0
     end
 
-    def self.csv_sum_rows(column, start_row, end_row)
+    def csv_sum_rows(column, start_row, end_row)
       column.upcase!
       %Q{=SUM(#{column}#{start_row}:#{column}#{end_row})}
     end

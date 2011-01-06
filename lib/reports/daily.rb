@@ -56,7 +56,7 @@ class Daily < Base
   def initialize(start_date, end_date, activities)
     super(start_date, end_date, activities)
     @data = {} # FAILS: Hash.new(Summary.new(0, nil))
-    @client = activities.first.task.objective.project.client
+    @client = activities.first.project.client
     
     d = start_date
     while d <= end_date

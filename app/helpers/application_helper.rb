@@ -1,5 +1,14 @@
 module ApplicationHelper
   
+  def project_cookie_crumbs(project)
+    a = [link_to(project.name, project_path(project))]
+    while project.parent_id
+      project = project.parent
+      a = [link_to(project.name, project_path(project))] + a
+    end
+    a.join('::')
+  end
+  
   def get_user
     controller.get_user
   end
