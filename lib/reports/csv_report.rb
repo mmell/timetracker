@@ -4,8 +4,7 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
   MinuteColumn = 'D'
   MinuteTotalColumn = 'E'
   Columns = [
-    'Objective',
-    'Task',
+    'Activity',
     'Activity Completed',
     'Minutes',
     'Total Mins',
@@ -33,19 +32,17 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
     
   def add_task_line(task)
     add_line( [
-      task.objective.name, 
-      task.name, 
+      project.name, 
       nil, 
       nil, 
       nil, 
       nil, 
-      [task.objective.url, task.objective.description].delete_if { |e| e.blank? }.join(" : ")
+      [project.url, project.description].delete_if { |e| e.blank? }.join(" : ")
     ] ) 
   end
   
   def add_task_totals_line(task)
     add_line( [
-      nil, 
       nil, 
       'Task Total', 
       nil, 
@@ -56,7 +53,6 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
   
   def add_activity_line(activity)
     add_line( [
-      nil, 
       nil, 
       activity.local_stop_time, 
       activity.minutes, 
@@ -72,7 +68,6 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
     add_blank_line
     add_line( [
       'Total', 
-      nil, 
       nil, 
       nil, 
       csv_sum_rows(MinuteColumn, @activity_row1, @current_row -3), 

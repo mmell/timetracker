@@ -4,7 +4,7 @@ class Client < ActiveRecord::Base
   
   scope :active, where(:archived => false)
 
-  validates_numericality_of :contact_id
+  validates_presence_of :contact_id
   validates_associated :contact
   
   validates_presence_of :name

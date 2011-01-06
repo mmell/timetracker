@@ -15,9 +15,9 @@
 
 <p>
   <b>Objective:</b>
-  <%= link_to(@current_activity.task.objective.name, @current_activity.task.objective) %>
+  <%= link_to(@current_activity.project.name, @current_activity.project) %>
 <br />
-  <%= @current_activity.task.objective.description %>
+  <%= @current_activity.project.description %>
 </p>
 
 <%= form_for(@current_activity) do |f| %>
@@ -34,9 +34,9 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :task_id %> (<%= link_to('Edit', [@current_activity.task.objective, @current_activity.task])%>)<br />
-    <%= select_tag "current_activity[task_id]", 
-			options_from_collection_for_select(get_user.tasks.active, "id", "fullname", @current_activity.task_id) 
+    <%= f.label :project_id %> (<%= link_to('Edit', @current_activity.project)%>)<br />
+    <%= select_tag "current_activity[project_id]", 
+			options_from_collection_for_select(get_user.projects.active, "id", "fullname", @current_activity.project_id) 
 		%>
   </div>
   <div class="field">

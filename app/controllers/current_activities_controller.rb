@@ -38,8 +38,8 @@ class CurrentActivitiesController < ApplicationController
   # GET /current_activities/1/edit
   def edit
     @current_activity = CurrentActivity.find(params[:id])
-    if @current_activity.description.blank? and !@current_activity.task.activities.empty?
-      @current_activity.description = @current_activity.task.activities.last.description
+    if @current_activity.description.blank? and !@current_activity.project.activities.empty?
+      @current_activity.description = @current_activity.project.activities.last.description
     end
   end
 
@@ -66,7 +66,7 @@ class CurrentActivitiesController < ApplicationController
 
     respond_to do |format|
       if @current_activity.update_attributes(params[:current_activity])
-        format.html { redirect_to( person_activities_path(get_user), :notice => 'Current activity was successfully updated.') }
+        format.html { redirect_to( activities_path, :notice => 'Current activity was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -90,7 +90,7 @@ class CurrentActivitiesController < ApplicationController
     @current_activity.update_attributes(:started => Time.now.utc )
 
     respond_to do |format|
-      format.html { redirect_to(person_activities_url(get_user)) }
+      format.html { redirect_to(activities_url) }
       format.xml  { head :ok }
     end
   end
@@ -100,7 +100,7 @@ class CurrentActivitiesController < ApplicationController
     @current_activity.delete # not destroy so the callbacks aren't run
 
     respond_to do |format|
-      format.html { redirect_to(person_activities_url(get_user)) }
+      format.html { redirect_to(activities_url) }
       format.xml  { head :ok }
     end
   end
@@ -112,7 +112,7 @@ class CurrentActivitiesController < ApplicationController
     @current_activity.destroy
 
     respond_to do |format|
-      format.html { redirect_to(person_activities_url(get_user)) }
+      format.html { redirect_to(activities_url) }
       format.xml  { head :ok }
     end
   end

@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to(projects_url) }
+      format.html { redirect_to(clients_url) }
       format.xml  { head :ok }
     end
   end
@@ -92,8 +92,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => 'Current activity was successfully created.') }
         format.xml  { render :xml => @current_activity, :status => :created, :location => @current_activity }
       else
-        task = Task.find(params[:id])
-        format.html { redirect_to([@objective, task], :notice => @current_activity.errors) }
+        format.html { redirect_to(@current_activity, :notice => @current_activity.errors) }
         format.xml  { render :xml => @current_activity.errors, :status => :unprocessable_entity }
       end
     end

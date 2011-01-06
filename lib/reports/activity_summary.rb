@@ -1,5 +1,5 @@
 module Reports
-class TaskSummary < Base
+class ActivitySummary < Base
    
   Summary = Struct.new(:name, :minutes, :url)
   
@@ -49,10 +49,10 @@ class TaskSummary < Base
     add_header_lines
     
     activities.each { |activity|
-      id = activity.task.objective.id
-      @data[id] ||= Summary.new(activity.task.objective.name, 0, nil)
+      id = activity.project.id
+      @data[id] ||= Summary.new(activity.project.name, 0, nil)
       @data[id].minutes += activity.minutes
-      @data[id].url ||= activity.task.objective.url
+      @data[id].url ||= activity.project.url
     }
 
     add_final_totals_lines

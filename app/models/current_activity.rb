@@ -1,14 +1,14 @@
 class CurrentActivity < ActiveRecord::Base
-  belongs_to :task
+  belongs_to :project
   belongs_to :person
   
-  validates_presence_of :started
+  validates_presence_of :project
+  validates_presence_of :person_id
   
-  validates_numericality_of :task_id
-  validates_numericality_of :person_id
-  
-  validates_associated :task
+  validates_associated :project
   validates_associated :person
+  
+  validates_presence_of :started
   
   before_create :stop_user
   
@@ -17,7 +17,7 @@ class CurrentActivity < ActiveRecord::Base
   def archive_activity
     Activity.create(
       :person_id => self.person_id,
-      :task_id => self.task_id,
+      :project_id => self.project_id,
       :description => self.description,
       :minutes => self.minutes
     )

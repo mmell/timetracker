@@ -5,7 +5,7 @@
 
 <p>
   <b>Project:</b>
-  <%= @project.name %> (<%= link_to(@project.url, @project.url) %>)
+  <%= link_to_projects @project %> (<%= link_to(@project.url, @project.url) %>)
 </p>
 
 <p>
@@ -14,13 +14,13 @@
 </p>
 
 
-<%= button_to('Start Activity', start_objective_task_path(@objective, @task)) %>
+<%= button_to('Start Activity', start_project_path(@project)) %>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Destroy', @project, :confirm => 'Are you sure?', :method => :delete %>
 
 <h2>Sub-Projects</h2>
-<%= render :partial => 'projects/sub_projects', :collection => @project.projects %>
+<%= render :partial => 'projects/sub_projects', :locals => {:projects => @project.projects} %>
 
 <h2>Activities</h2>
-<%= render :partial => 'activities/list', :collection => @project.activities %>
+<%= render :partial => 'activities/list', :locals => {:activities => @project.activities } %>

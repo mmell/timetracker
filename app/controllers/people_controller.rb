@@ -21,12 +21,16 @@ class PeopleController < ApplicationController
     @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")
     @start_date = Time.parse("#{params[:from][:year]}-#{params[:from][:month]}-#{params[:from][:day]}")
     @project = Project.find(params[:project_id]) # FIXME: add security
-    @report_user_id = get_user.id
+    @report_user_id = get_user.id 
+    # add 1.day to conditions to inclued all of the requested day
     activities = Activity.find(:all, 
-      :conditions => ["activities.stopped > ? and activities.stopped < ? and objectives.project_id = ? and activities.person_id = ?", 
-        @start_date, @end_date + 1.day, @project, @report_user_id],
-      :include => { :task => :objective },
-      :order => "objectives.name, tasks.name, stopped DESC"
+      :conditions => [
+        # add 1.day to end_date to include all of the requested day  
+        "activities.stopped > ? and activities.stopped < ? and activities.project_id = ? and activities.person_id = ?", 
+        @start_date, @end_date + 1.day, @project, @report_user_id
+      ],
+      :include => :project,
+      :order => "projects.name, stopped DESC"
     )
     report = "Reports::#{params[:format]}".constantize.new(@start_date, @end_date, activities )
     send_data(report.render, 
@@ -50,7 +54,7 @@ class PeopleController < ApplicationController
   def login
     if params[:id] and @user = Person.find(params[:id])
       session[:user_id] = @user.id
-      redirect_to person_activities_path(@user), :notice => "Welcome #{@user.name}"
+      redirect_to activities_path, :notice => "Welcome #{@user.name}"
     end
   end
 

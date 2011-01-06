@@ -16,7 +16,7 @@
   	<table>
 		<% client.projects.each do |project| %>
 		  <tr valign='top'>
-		    <td><%= link_to(project.name, project) %></td>
+		    <td><%= link_to_projects project %></td>
 		  </tr>
 		<% end %>
 		</table> 	

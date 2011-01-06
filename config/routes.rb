@@ -5,7 +5,11 @@ TimeTracker::Application.routes.draw do
   get "static/index"
   get "static/legal"
 
-  resources :activities
+  resources :activities do
+    collection do
+      get :all
+    end
+  end
   
   resources :clients do 
     resources :projects
@@ -22,13 +26,6 @@ TimeTracker::Application.routes.draw do
       post :login, :logout, :reports
       get :reports
     end
-    
-    resources :activities do
-      collection do
-        get :all
-      end
-    end
-
   end
 
   resources :projects do

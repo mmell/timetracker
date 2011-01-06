@@ -18,8 +18,8 @@
 </ul>
 
 <ul class='nav_base_horizontal' id='main_nav'>
-	<li><%= link_to("Activities Today", person_activities_path(get_user), :class => link_class(person_activities_path(get_user))) %></li>
-	<li><%= link_to("Recent Activities", all_person_activities_path(get_user), :class => link_class(all_person_activities_path(get_user))) %></li>
+	<li><%= link_to("Activities Today", activities_path, :class => link_class(activities_path)) %></li>
+	<li><%= link_to("Recent Activities", all_activities_path, :class => link_class(all_activities_path)) %></li>
 </ul>
 <% end -%>
 </div>
@@ -27,7 +27,7 @@
 <% if get_user and get_user.current_activity -%>
 <div class='content' id='current_activity'>
 	<h3>Current Activity: 
-	<%= link_to(get_user.current_activity.task.fullname, [get_user.current_activity.task.objective, get_user.current_activity.task]) %> 
+	<%= link_to_projects(get_user.current_activity.project) %> 
 	(<%= get_user.local_time(get_user.current_activity.started).strftime('%I:%M %p').downcase %> / <span id='activity_timer_minutes'>0</span> min)</h3>
 <ul class='nav_base_horizontal' id='current_activity_nav'>
 	<li><%= link_to 'Stop', get_user.current_activity, :confirm => 'Are you sure?', :method => :delete %></li>
@@ -51,14 +51,6 @@
 
 <% if notice %><div class='notice'><%= notice %></div><% end %>
 <% if alert %><div class='alert'><%= alert %></div><% end %>
-
-<% if params[:action] == 'show' -%>
-<div id='show_nav'>
-<ul class='nav_base_horizontal' id='nav'>
-<%= render(:file => "layouts/navs/#{controller_path}/show") %>
-<ul>
-</div>
-<% end -%>
 
 <%= yield %>
 

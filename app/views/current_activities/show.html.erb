@@ -4,23 +4,8 @@
 </p>
 
 <p>
-  <b>Client:</b>
-  <%= link_to(@current_activity.project.client.name, @current_activity.project.client) %>
-</p>
-
-<p>
   <b>Project:</b>
-  <%= link_to(@current_activity.project.name, @current_activity.project) %>
-</p>
-
-<p>
-  <b>Objective:</b>
-  <%= link_to(@current_activity.task.objective.name, @current_activity.task.objective) %>
-</p>
-
-<p>
-  <b>Task:</b> (<%= link_to(@current_activity.task.name, [@current_activity.task.objective, @current_activity.task]) %>)
-  <%= link_to(@current_activity.task.name, [@current_activity.task.objective, @current_activity.task]) %>
+  <%= link_to_projects @current_activity.project %>
 </p>
 
 <p>

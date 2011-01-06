@@ -5,21 +5,20 @@
     <th>Minutes</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% activities.each do |activity| %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
-    <td><%= project_cookie_crumbs(project)) %></td>
+    <td><%= link_to_projects(activity.project) %></td>
     <td><%= activity.stopped.localtime %></td>
     <td align='right'><%= activity.minutes %></td>
     <td><%= button_to('Start', start_project_path(activity.project)) %></td>
-    <td><%= link_to 'Edit', edit_person_activity_path(get_user, activity) %></td>
+    <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
   </tr>
 <% unless activity.description.blank? %>
   <tr valign='top' class='row<%= current_cycle %>'>
     <td class='rowblank'></td>
-    <td colspan='5'><%= activity.description %></td>
+    <td colspan='4'><%= activity.description %></td>
   </tr>
 <% end %>
 <% end %>

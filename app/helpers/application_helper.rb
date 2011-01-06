@@ -1,12 +1,13 @@
 module ApplicationHelper
   
-  def project_cookie_crumbs(project)
-    a = [link_to(project.name, project_path(project))]
-    while project.parent_id
+  def link_to_projects(project)
+    a = [link_to_unless(current_page?(project), h(project.name), project_path(project))]
+    while !project.parent_id.nil?
       project = project.parent
-      a = [link_to(project.name, project_path(project))] + a
+      a = [link_to_unless(current_page?(project), h( project.name), project_path(project))] + a
     end
-    a.join('::')
+    a = [link_to(h( project.client.name), client_path(project.client))] + a
+    a.join('::').html_safe
   end
   
   def get_user

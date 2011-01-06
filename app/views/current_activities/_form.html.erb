@@ -4,20 +4,8 @@
 </p>
 
 <p>
-  <b>Client:</b>
-  <%= link_to(@current_activity.project.client.name, @current_activity.project.client) %>
-</p>
-
-<p>
   <b>Project:</b>
-  <%= link_to(@current_activity.project.name, @current_activity.project) %>
-</p>
-
-<p>
-  <b>Objective:</b>
-  <%= link_to(@current_activity.task.objective.name, @current_activity.task.objective) %>
-<br />
-  <%= @current_activity.task.objective.description %>
+  <%= link_to_projects @current_activity.project %>
 </p>
 
 <%= form_for(@current_activity) do |f| %>
@@ -34,10 +22,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :task_id %> (<%= link_to('Edit', edit_objective_task_path(@current_activity.task.objective, @current_activity.task) )%>)<br />
-    <%= select_tag "current_activity[task_id]", 
-			options_from_collection_for_select(Task.all(:conditions => ['tasks.archived = ?', false], :include => {:objective => { :project => :client } }, :order => 'clients.name, projects.name, objectives.name'), "id", "fullname", @current_activity.task_id) 
-		%>FIXME only show users' tasks
+    <%= f.label :project_id %> (<%= link_to('Edit', edit_project_path(@current_activity.project) )%>)<br />
+    <%= select_tag "current_activity[project_id]", 
+			options_from_collection_for_select(	
+				Project.all(
+					:conditions => ['projects.archived = ?', false], 
+					:include => :client, 
+					:order => 'clients.name, projects.name'
+				), "id", "fullname", @current_activity.project_id
+			) 
+		%>FIXME only show users' projects
   </div>
   <div class="field">
     <%= f.label :started %><br />

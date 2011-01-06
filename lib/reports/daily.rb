@@ -1,7 +1,7 @@
 module Reports
 class Daily < Base
   
-  Day = Struct.new(:category_minutes, :tasks)
+  Day = Struct.new(:category_minutes, :activities)
   
   def self.file_ext
     'csv'
@@ -18,11 +18,11 @@ class Daily < Base
   end
 
   def add_final_totals_lines()
-    task_row = ['']
+    activity_row = ['']
     days.each { |day| 
-      task_row << @data[day].tasks.uniq.join("\n")
+      activity_row << @data[day].activities.uniq.join("\n")
     }
-    add_line( task_row)
+    add_line( activity_row)
     
     add_blank_line
     add_line( [
@@ -50,7 +50,7 @@ class Daily < Base
   end 
   
   def format_activity(a)
-    "(#{a.task.objective.work_category}) #{a.task.objective.name} #{a.task.objective.url}".strip
+    "(#{a.project.work_category}) #{a.project.name} #{a.project.url}".strip
   end 
   
   def initialize(start_date, end_date, activities)
@@ -67,10 +67,10 @@ class Daily < Base
     add_header_lines
 
     activities.each { |activity|
-      day, category = format_date(activity.stopped), activity.task.objective.work_category
+      day, category = format_date(activity.stopped), activity.project.work_category
       @data[day].category_minutes['all'] += activity.minutes
       @data[day].category_minutes[category] += activity.minutes
-      @data[day].tasks << format_activity(activity)
+      @data[day].activities << format_activity(activity)
     }
     
     add_blank_line
