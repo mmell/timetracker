@@ -24,7 +24,7 @@
   <div class="field">
     <%= f.label :project_id %> (<%= link_to('Edit', @current_activity.project)%>)<br />
     <%= select_tag "current_activity[project_id]", 
-			options_from_collection_for_select(get_user.projects.active, "id", "fullname", @current_activity.project_id) 
+			sub_projects_select(nil, @current_activity.project) 
 		%>
   </div>
   <div class="field">

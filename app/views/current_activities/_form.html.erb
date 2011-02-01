@@ -23,14 +23,7 @@
 
   <div class="field">
     <%= f.label :project_id %> (<%= link_to('Edit', edit_project_path(@current_activity.project) )%>)<br />
-    <%= select_tag "current_activity[project_id]", 
-			options_from_collection_for_select(	
-				Project.all(
-					:conditions => ['projects.archived = ?', false], 
-					:order => 'projects.name'
-				), "id", "fullname", @current_activity.project_id
-			) 
-		%>FIXME only show users' projects
+    <%= select_tag "current_activity[project_id]", sub_projects_select %>FIXME only show users' projects
   </div>
   <div class="field">
     <%= f.label :started %><br />

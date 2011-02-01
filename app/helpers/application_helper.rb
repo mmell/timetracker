@@ -1,5 +1,23 @@
 module ApplicationHelper
   
+  def project_select(project, selected_id = nil)
+    selected = (selected_id and project.id == selected_id ? " selected='true'" : '')
+    "<option value='#{project.id}'#{selected}>#{h project.fullname}</option>"    
+  end
+
+  def sub_projects_select(project = nil, selected_id = nil)
+    ordered_sub_projects(project).map { |e| project_select(e, selected_id) }.join().html_safe
+  end
+  
+  def ordered_sub_projects(project = nil)
+    @ordered_sub_projects ||= []
+    @ordered_sub_projects << project if project
+    Project.active.find_all_by_parent_id(project,
+			:order => "projects.name"                                                     
+		).each { |e| ordered_sub_projects(e) }
+		@ordered_sub_projects
+  end
+
   def link_to_projects(project)
     last = (current_page?(project) ? "<strong>#{h( project.name)}</strong>" : link_to(h(project.name), project_path(project)) )
     a = [last]

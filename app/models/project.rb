@@ -17,7 +17,7 @@ class Project < ActiveRecord::Base
   def defaults
     self.url = 'http://' + self.url unless 0 == (self.url =~ /.*\:\/\/.*/) or self.url.blank?
   end
-  
+    
   def work_categories
     # FIXME these can be db items if any projects wants other values
     {

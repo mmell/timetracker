@@ -14,7 +14,7 @@
   <div class="field">
     <%= f.label :parent_id %><br />
     <%= select_tag "project[parent_id]", 
-			'<option value="">None</option>'.html_safe + options_from_collection_for_select(Project.all(:order => :name), "id", "fullname", @project.parent_id) 
+			'<option value="">None</option>'.html_safe + sub_projects_select 
 			%>
   </div>
   <div class="field">
