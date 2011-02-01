@@ -1,15 +1,17 @@
 <table>
 <tr>
   <th></th>
+  <th></th>
   <th>Hours</th>
   <th>Url</th>
 </tr>
 
 <% projects.each do |project| %>
 	<tr valign='top' class='row<%= cycle(1, 2) %>'>
+    <td><%= button_to('Start', start_project_path(project)) %></td>
     <td><%= link_to(project.name, project) %></td>
     <td><%= project.hours %></td>
-    <td><%= link_to_if(!project.url.blank?, 'Project URL', project.url) %></td>
+    <td><%= link_to_project_url(project) %></td>
   </tr>
 <% end %>
 </table>

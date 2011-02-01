@@ -2,20 +2,14 @@
 
 <table>
   <tr>
-    <th>Client</th>
     <th>Project</th>
     <th></th>
   </tr>
 
 <% @projects.each do |project| %>
 	<tr valign='top' class='row<%= cycle(1, 2) %>'>
-    <td><%= link_to(project.client.name, project.client) %></td>
-    <td><%= link_to(project.name, project) %></td>
-    <td><%= link_to_if(!project.url.blank?, 'Project URL', project.url) %></td>
+    <td><%= link_to_projects( project) %></td>
+    <td><%= link_to_if(!project.url.blank?, project.url, project.url) %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Project', new_project_path(:client_id => @client) %>

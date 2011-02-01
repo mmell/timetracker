@@ -1,14 +1,18 @@
 module Reports
 class ActivitySummary < Base
    
+  FILE_EXT = 'txt'
   Summary = Struct.new(:name, :minutes, :url)
-  
-  def self.file_ext
-    'txt'
-  end
-  
-  def file_ext
-    TaskSummary.file_ext
+    
+  def initialize(start_date, end_date, project, user)
+    super(start_date, end_date, project, user)
+    @data = {} # FAILS: Hash.new(Summary.new(0, nil))
+    
+    add_header_lines
+    
+    each_project_each_activity(@project)
+
+    add_final_totals_lines
   end
   
   def add_header_lines
@@ -19,6 +23,15 @@ class ActivitySummary < Base
     ] )
   end
     
+  def each_activity(project)
+    project_activities(project).each { |activity|
+      id = activity.project.id
+      @data[id] ||= Summary.new(activity.project.name, 0, nil)
+      @data[id].minutes += activity.minutes
+      @data[id].url ||= activity.project.url
+    }
+  end
+  
   def add_final_totals_lines()
     add_blank_line
 
@@ -40,22 +53,6 @@ class ActivitySummary < Base
   
   def total_hours
     format_hours( @data.keys.inject(0) { |memo, e| memo + @data[e].minutes } / 60.0 )
-  end
-  
-  def initialize(start_date, end_date, activities)
-    super(start_date, end_date, activities)
-    @data = {} # FAILS: Hash.new(Summary.new(0, nil))
-    
-    add_header_lines
-    
-    activities.each { |activity|
-      id = activity.project.id
-      @data[id] ||= Summary.new(activity.project.name, 0, nil)
-      @data[id].minutes += activity.minutes
-      @data[id].url ||= activity.project.url
-    }
-
-    add_final_totals_lines
   end
   
   def render

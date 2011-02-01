@@ -19,4 +19,8 @@ class Activity < ActiveRecord::Base
     person.local_time(stopped)
   end
   
+  def hours
+    "%6.2f" % [ minutes / 60.0 ]
+  end
+
 end

@@ -1,13 +1,18 @@
 module ApplicationHelper
   
   def link_to_projects(project)
-    a = [link_to_unless(current_page?(project), h(project.name), project_path(project))]
+    last = (current_page?(project) ? "<strong>#{h( project.name)}</strong>" : link_to(h(project.name), project_path(project)) )
+    a = [last]
     while !project.parent_id.nil?
       project = project.parent
-      a = [link_to_unless(current_page?(project), h( project.name), project_path(project))] + a
+      a = [link_to_unless(current_page?(project), h(project.name), project_path(project))] + a
     end
-    a = [link_to(h( project.client.name), client_path(project.client))] + a
     a.join('::').html_safe
+  end
+  
+  def link_to_project_url(project)
+    # FIXME is the url unsafe?
+    project.url.blank? ? '' : "(#{link_to( h( project.url), project.url, { :target => 'project_url', :class => 'project_url'})})".html_safe
   end
   
   def get_user

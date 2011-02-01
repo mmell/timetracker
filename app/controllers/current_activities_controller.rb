@@ -1,6 +1,7 @@
 class CurrentActivitiesController < ApplicationController
 
   before_filter :require_user
+  before_filter :find_current_activity, :except => [:new, :create]
   
   # GET /current_activities
   # GET /current_activities.xml
@@ -66,7 +67,7 @@ class CurrentActivitiesController < ApplicationController
 
     respond_to do |format|
       if @current_activity.update_attributes(params[:current_activity])
-        format.html { redirect_to( activities_path, :notice => 'Current activity was successfully updated.') }
+        format.html { redirect_to( edit_current_activity_url(@current_activity), :notice => 'Current activity was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -77,10 +78,12 @@ class CurrentActivitiesController < ApplicationController
 
   def adjust_start
     @current_activity = CurrentActivity.find(params[:id])
-    @current_activity.update_attributes(:started => (@current_activity.started + params[:adjustment].to_i.minutes) )
+    minutes = params[:adjustment].to_i.minutes
+    minutes = (params[:direction] == 'later' ? minutes : 0 - minutes) 
+    @current_activity.update_attributes(:started => (@current_activity.started + minutes) )
 
     respond_to do |format|
-      format.html { redirect_to(edit_current_activity_url(@current_activity)) }
+      format.html { redirect_to(edit_current_activity_url(@current_activity), :notice => 'Current activity was successfully updated.') }
       format.xml  { head :ok }
     end
   end
@@ -90,7 +93,7 @@ class CurrentActivitiesController < ApplicationController
     @current_activity.update_attributes(:started => Time.now.utc )
 
     respond_to do |format|
-      format.html { redirect_to(activities_url) }
+      format.html { redirect_to(edit_current_activity_url(@current_activity), :notice => 'Current activity was successfully restarted.') }
       format.xml  { head :ok }
     end
   end
@@ -117,4 +120,12 @@ class CurrentActivitiesController < ApplicationController
     end
   end
 
+  def find_current_activity
+    @current_activity = get_user.current_activity
+    unless @current_activity
+      redirect_to(all_activities_url, :alert => "You don't have a current activity.")
+      return false
+    end
+  end
+  
 end

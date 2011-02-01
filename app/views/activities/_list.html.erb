@@ -1,18 +1,18 @@
 <table>
   <tr>
+    <th></th>
     <th>Project</th>
     <th>Stopped</th>
-    <th>Minutes</th>
-    <th></th>
+    <th>Hours</th>
     <th></th>
   </tr>
 
 <% activities.each do |activity| %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
+    <td><%= button_to('Start', start_project_path(activity.project)) %></td>
     <td><%= link_to_projects(activity.project) %></td>
     <td><%= activity.stopped.localtime %></td>
-    <td align='right'><%= activity.minutes %></td>
-    <td><%= button_to('Start', start_project_path(activity.project)) %></td>
+    <td align='right'><%= activity.hours %></td>
     <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
   </tr>
 <% unless activity.description.blank? %>

@@ -5,7 +5,9 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.xml
   def index
-    @activities = get_user.activities.find(:all, :conditions => "stopped > '#{Time.now.utc - 12.hours}'")
+    @activities = get_user.activities.find(:all, :conditions => "stopped > '#{Time.now.utc - 12.hours}'",
+      :order => "stopped DESC"
+    )
     @minutes_today = @activities.inject(0) { |memo, e| memo + e.minutes }
     @minutes_today += get_user.current_activity.minutes if get_user.current_activity
 
@@ -16,7 +18,9 @@ class ActivitiesController < ApplicationController
   end
 
   def all
-    @activities = get_user.activities.find(:all, :conditions => ["stopped > '#{(Time.now() - 31.days).strftime("%Y-%m-%d")}'"])
+    @activities = get_user.activities.find(:all, :conditions => ["stopped > '#{(Time.now() - 31.days).strftime("%Y-%m-%d")}'"],
+      :order => "stopped DESC"
+    )
 
     respond_to do |format|
       format.html # all.html.erb

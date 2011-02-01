@@ -5,7 +5,7 @@
 
 <p>
   <b>Project:</b>
-  <%= link_to_projects @activity.project %>
+  <%= link_to_projects @activity.project %> <%= link_to_project_url(@activity.project) %> 
 </p>
 
 <p>
@@ -14,8 +14,8 @@
 </p>
 
 <p>
-  <b>Minutes:</b>
-  <%= @activity.minutes %>
+  <b>Hours:</b>
+  <%= @activity.hours %>
 </p>
 
 <p>

@@ -4,20 +4,8 @@
 </p>
 
 <p>
-  <b>Client:</b>
-  <%= link_to(@current_activity.project.client.name, @current_activity.project.client) %>
-</p>
-
-<p>
   <b>Project:</b>
-  <%= link_to(@current_activity.project.name, @current_activity.project) %>
-</p>
-
-<p>
-  <b>Objective:</b>
-  <%= link_to(@current_activity.project.name, @current_activity.project) %>
-<br />
-  <%= @current_activity.project.description %>
+  <%= link_to_projects(@current_activity.project) %>
 </p>
 
 <%= form_for(@current_activity) do |f| %>

@@ -19,8 +19,7 @@
     <%= f.label :project_id %><br />
     <%= select_tag "activity[project_id]", 
 			options_from_collection_for_select(Project.all( # FIXME hide archived and other users' projects 
-					:order => "clients.name, projects.id, projects.name", 
-					:include => :client 
+					:order => "projects.id, projects.name"
 				), 
 				"id", "fullname", @activity.project_id) 
 		%>

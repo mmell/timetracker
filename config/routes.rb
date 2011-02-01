@@ -11,10 +11,6 @@ TimeTracker::Application.routes.draw do
     end
   end
   
-  resources :clients do 
-    resources :projects
-  end
-  
   resources :current_activities do
     member do
       post :adjust_start, :cancel, :restart

@@ -1,14 +1,42 @@
 module Reports
 class Daily < Base
   
+  FILE_EXT = 'csv'
   Day = Struct.new(:category_minutes, :activities)
-  
-  def self.file_ext
-    'csv'
+   
+  def initialize(start_date, end_date, project, user)
+    super(start_date, end_date, project, user)
+    @data = {} # FAILS: Hash.new(Day.new(0, nil))
+    @project = project
+    
+    d = start_date
+    while d <= end_date
+      @data[format_date(d)] = Day.new(Hash.new(0), [])
+      d += 1.day
+    end
+
+    add_header_lines
+    each_project_each_activity(@project)
+    add_blank_line
+    
+    @project.work_categories.keys.sort.each { |category|
+      category_row = [category]
+      days.each { |day| 
+        category_row << format_hours(@data[day].category_minutes[category] / 60.0)
+      }
+      add_line( category_row )
+    }
+
+    add_final_totals_lines
   end
   
-  def file_ext
-    Daily.file_ext
+  def each_activity(project)
+    project_activities(project).each { |activity|
+      day, category = format_date(activity.stopped), project.work_category
+      @data[day].category_minutes['all'] += activity.minutes
+      @data[day].category_minutes[category] += activity.minutes
+      @data[day].activities << format_activity(activity)
+    }  
   end
   
   def add_header_lines
@@ -28,7 +56,7 @@ class Daily < Base
     add_line( [
       '', 'total hours', total_hours
     ] )
-    @client.work_categories.keys.sort.each { |e| 
+    @project.work_categories.keys.sort.each { |e| 
       add_line( [
         '', "hours (#{e})", total_hours(e)
       ] )
@@ -46,45 +74,12 @@ class Daily < Base
   end
   
   def format_date(d)
-    d.strftime('%m/%d/%Y')
+    @user.local_time(d).strftime('%m/%d/%Y')
   end 
   
   def format_activity(a)
     "(#{a.project.work_category}) #{a.project.name} #{a.project.url}".strip
   end 
-  
-  def initialize(start_date, end_date, activities)
-    super(start_date, end_date, activities)
-    @data = {} # FAILS: Hash.new(Summary.new(0, nil))
-    @client = activities.first.project.client
-    
-    d = start_date
-    while d <= end_date
-      @data[format_date(d)] = Day.new(Hash.new(0), [])
-      d += 1.day
-    end
-
-    add_header_lines
-
-    activities.each { |activity|
-      day, category = format_date(activity.stopped), activity.project.work_category
-      @data[day].category_minutes['all'] += activity.minutes
-      @data[day].category_minutes[category] += activity.minutes
-      @data[day].activities << format_activity(activity)
-    }
-    
-    add_blank_line
-    
-    @client.work_categories.keys.sort.each { |category|
-      category_row = [category]
-      days.each { |day| 
-        category_row << format_hours(@data[day].category_minutes[category] / 60.0)
-      }
-      add_line( category_row )
-    }
-
-    add_final_totals_lines
-  end
   
   def render
     @lines.map { |e| CSV.generate_line( e ) }.join('')

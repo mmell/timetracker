@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<div id='wrapper'>
 <div class='content' id='top'>
 <% if get_user -%>
 <ul class='nav_base_horizontal' id='dependability_bar'>
@@ -41,13 +42,17 @@
 <div class='content' id='left_col'>
 <% if get_user -%>
 <ul class='nav_base_vertical' id='left_nav'>
-	<li><%= link_to( 'Clients & Projects', clients_path, :class => link_class(clients_path) )%></li>
+	<li><%= link_to( 'Projects', projects_path, :class => link_class(projects_path) )%></li>
 	<li><%= link_to( 'People', people_path, :class => link_class(people_path) )%></li>
 </ul>   
 <% end -%>
 </div>
 
 <div class='content' id='middle'>
+
+<ul class='nav_base_horizontal' id='controller_nav'>
+	<%= render :file => "layouts/nav/projects/main" %>
+</ul>
 
 <% if notice %><div class='notice'><%= notice %></div><% end %>
 <% if alert %><div class='alert'><%= alert %></div><% end %>
@@ -56,12 +61,15 @@
 
 </div>
 
-<div class='content' id='bottom'>
+</div>
+
+<div class='' id='bottom'>
 <ul class='fineprint'>
 	<li>Brought to you by nthWave Web Works.</li>
 	<li><%= link_to('Legal', static_legal_path ) %></li>
 </ul>
 </div>
+
 <% if get_user and get_user.current_activity -%>
 <script language="javascript">
 <!--

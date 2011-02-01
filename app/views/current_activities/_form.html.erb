@@ -1,11 +1,11 @@
 <p>
   <b>Person:</b>
-  <%= @current_activity.person.name %>
+  <%= link_to(@current_activity.person.name, @current_activity.person) %>
 </p>
 
 <p>
   <b>Project:</b>
-  <%= link_to_projects @current_activity.project %>
+  <%= link_to_projects @current_activity.project %> <%= link_to_project_url(@current_activity.project) %>
 </p>
 
 <%= form_for(@current_activity) do |f| %>
@@ -27,8 +27,7 @@
 			options_from_collection_for_select(	
 				Project.all(
 					:conditions => ['projects.archived = ?', false], 
-					:include => :client, 
-					:order => 'clients.name, projects.name'
+					:order => 'projects.name'
 				), "id", "fullname", @current_activity.project_id
 			) 
 		%>FIXME only show users' projects

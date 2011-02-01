@@ -1,10 +1,11 @@
 module Reports
 class CSVReport < Base # the name CSV conflicts with the CSV lib?
 
-  MinuteColumn = 'D'
-  MinuteTotalColumn = 'E'
+  FILE_EXT = 'csv'
+  MinuteColumn = 'C'
+  MinuteTotalColumn = 'D'
   Columns = [
-    'Activity',
+    'Project',
     'Activity Completed',
     'Minutes',
     'Total Mins',
@@ -12,14 +13,36 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
     'Notes',
   ]
 
-  def self.file_ext
-    'csv'
-  end
-  
-  def file_ext
-    CSVReport.file_ext
+  def initialize(start_date, end_date, project, user)
+    super(start_date, end_date, project, user)
+    add_header_lines
+
+    @current_project = nil # tracking sub-projects
+    project_rows(@project)
+    add_project_totals_line(@current_project) # totals for the last sub-project need to be written
+
+    add_final_totals_lines
   end
     
+  def project_rows(project)
+    project_activities(project).each { |activity|
+      next if activity.minutes < 1
+      if @current_project != activity.project
+        if !@current_project.nil?
+          # write the previous sub-project's totals
+          add_project_totals_line(@current_project)
+        end
+        @current_project = activity.project
+        add_blank_line
+        add_project_line(@current_project)
+        @sub_project_activity_row1 = @current_row +1
+      end
+
+      add_activity_line(activity)
+    }
+    project.projects.each { |e| project_rows(e) }
+  end
+  
   def add_header_lines
     add_line( [
       'Dates', 
@@ -30,7 +53,7 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
     add_line( Columns ) 
   end
     
-  def add_task_line(task)
+  def add_project_line(project)
     add_line( [
       project.name, 
       nil, 
@@ -41,12 +64,12 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
     ] ) 
   end
   
-  def add_task_totals_line(task)
+  def add_project_totals_line(project)
     add_line( [
       nil, 
-      'Task Total', 
+      'SubTotal', 
       nil, 
-      csv_sum_rows(MinuteColumn, @task_activity_row1, @current_row),
+      csv_sum_rows(MinuteColumn, @sub_project_activity_row1, @current_row),
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)} 
     ] )
   end
@@ -74,32 +97,8 @@ class CSVReport < Base # the name CSV conflicts with the CSV lib?
       %Q{=(#{MinuteTotalColumn}#{@current_row +1}/60.0)}
     ] )
     add_blank_line
-    add_line( ['Report generated at', Time.now.to_s] )
-  end
-  
-  def initialize(start_date, end_date, activities)
-    super(start_date, end_date, activities)
-    add_header_lines
-
-    task = nil
-    activities.each { |activity|
-      next if activity.minutes < 1
-      if task != activity.task
-        if !task.nil?
-          # write the previous task's totals
-          add_task_totals_line(task)
-        end
-        task = activity.task
-        add_blank_line
-        add_task_line(task)
-        @task_activity_row1 = @current_row +1
-      end
-
-      add_activity_line(activity)
-    } 
-    add_task_totals_line(task) # totals for the last task need to be written
-
-    add_final_totals_lines
+    add_line( [nil, nil, nil, nil, 'Report', file_name] )
+    add_line( [nil, nil, nil, nil, 'Generated at', Time.now.to_s] )
   end
   
   def render

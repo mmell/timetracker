@@ -20,21 +20,11 @@ class PeopleController < ApplicationController
     end
     @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")
     @start_date = Time.parse("#{params[:from][:year]}-#{params[:from][:month]}-#{params[:from][:day]}")
-    @project = Project.find(params[:project_id]) # FIXME: add security
-    @report_user_id = get_user.id 
-    # add 1.day to conditions to inclued all of the requested day
-    activities = Activity.find(:all, 
-      :conditions => [
-        # add 1.day to end_date to include all of the requested day  
-        "activities.stopped > ? and activities.stopped < ? and activities.project_id = ? and activities.person_id = ?", 
-        @start_date, @end_date + 1.day, @project, @report_user_id
-      ],
-      :include => :project,
-      :order => "projects.name, stopped DESC"
-    )
-    report = "Reports::#{params[:format]}".constantize.new(@start_date, @end_date, activities )
+    @project = Project.find(params[:project_id])  
+    
+    report = "Reports::#{params[:format]}".constantize.new(@start_date, @end_date, @project, get_user )
     send_data(report.render, 
-      :filename => "#{params[:format]}_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.#{report.file_ext}",
+      :filename => report.file_name,
       :disposition => 'attachment', # default
       :type => 'application/octet-stream' # default
     )

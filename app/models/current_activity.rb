@@ -15,7 +15,7 @@ class CurrentActivity < ActiveRecord::Base
   before_destroy :archive_activity
 
   def archive_activity
-    Activity.create(
+    @archive_activity ||= Activity.create( # don't allow duplicates
       :person_id => self.person_id,
       :project_id => self.project_id,
       :description => self.description,
@@ -31,4 +31,8 @@ class CurrentActivity < ActiveRecord::Base
     CurrentActivity.destroy_all(:person_id => self.person_id )
   end
   
+  def hours
+    "%6.2f" % [ minutes / 60.0 ]
+  end
+
 end

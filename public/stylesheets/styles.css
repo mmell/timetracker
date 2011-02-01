@@ -1,13 +1,25 @@
 body {
   margin: 0px;
   padding: 0px;
-  background-color: #eee;
-  font: 12.6px Arial, Helvetica, sans-serif;
-  line-height: 18px;
+  background: #ffffff url(/images/template/background_tile_h1024.png) repeat-x 0px 0px;
+  font: 12.6px/18px Verdana, Trebuchet, Arial, Helvetica, sans-serif;
+
   color: #333;
   border-width: 6px 0px 0px 0px;
   border-style: solid;
   border-color: #ff9933;
+}
+div#wrapper {
+  margin: 0px 40px 0px 40px;
+  min-width: 610px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #003366;
+  background-color: #ffffff;
+  /* thanks http://robertnyman.com/2010/03/16/drop-shadow-with-css-for-all-web-browsers */
+  -moz-box-shadow: 0px 0px 64px #666;
+  -webkit-box-shadow: 0px 0px 64px #666;
+  box-shadow: 0px 0px 64px #666;
 }
 div.content {
   overflow: visible;
@@ -51,9 +63,8 @@ div#show_nav {
   height: 50px;
 }
 div#bottom {
-  margin: 0px 40px 10px 40px;
-  padding: 20px;
-  height: 50px;
+  margin: 0px 40px 60px 40px;
+  padding: 12px;
 }
 .profile_image { 
   float: left; 
@@ -109,3 +120,4 @@ div.alert {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
+.project_url { background: #dfb; }

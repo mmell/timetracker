@@ -12,7 +12,7 @@
 <div class="field">
   <%= label_tag( :project) %><br />
   <%= select_tag "project_id", 
-		options_from_collection_for_select(Project.all(:order => "clients.name, projects.name", :include => :client), "id", "fullname", @project) 
+		options_from_collection_for_select(Project.all(:order => "projects.name"), "id", "fullname", @project) 
 		%>
 </div>
 <div class="field">

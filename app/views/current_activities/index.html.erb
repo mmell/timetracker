@@ -4,7 +4,7 @@
   <tr>
     <th>Task</th>
     <th>Started</th>
-    <th>Minutes</th>
+    <th>Hours</th>
     <th>Description</th>
     <th></th>
     <th></th>
@@ -15,7 +15,7 @@
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
     <td><%= current_activity.project.name %></td>
     <td><%= current_activity.started.localtime %></td>
-    <td align='right'><%= current_activity.minutes %></td>
+    <td align='right'><%= current_activity.hours %></td>
     <td><%= current_activity.description %></td>
     <td><%= link_to 'Show', current_activity %></td>
     <td><%= link_to 'Edit', edit_current_activity_path(current_activity) %></td>

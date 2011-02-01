@@ -1,13 +1,12 @@
 class ProjectsController < ApplicationController
 
   before_filter :get_project, :except => [:index, :new, :create]
-  before_filter :get_client, :require_user
+  before_filter :require_user
 
   # GET /projects
   # GET /projects.xml
   def index
-    @projects = @client.nil? ? Project.all(:order => 'clients.name', :include => :client) : @client.projects
-
+    @projects = Project.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @projects }
@@ -27,7 +26,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.xml
   def new
-    @project = Project.new(:client_id => params[:client_id])
+    @project = Project.new(:parent_id => params[:parent_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -75,7 +74,7 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to(clients_url) }
+      format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
     end
   end
@@ -97,11 +96,6 @@ class ProjectsController < ApplicationController
       end
     end
   end
-
-  def get_client
-    @client = Client.find(params[:client_id]) if params[:client_id]
-  end
-  private :get_client
 
   def get_project
     @project = Project.find(params[:id])
