@@ -1,5 +1,5 @@
 module Reports
-class ActivitySummary < Base
+class ProjectSummary < Base
    
   FILE_EXT = 'txt'
   Summary = Struct.new(:name, :minutes, :url)

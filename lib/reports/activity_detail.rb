@@ -1,5 +1,5 @@
 module Reports
-class CSVReport < Base # the name CSV conflicts with the CSV lib?
+class ActivityDetail < Base 
 
   FILE_EXT = 'csv'
   MinuteColumn = 'C'
