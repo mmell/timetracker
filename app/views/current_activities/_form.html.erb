@@ -1,12 +1,8 @@
-<p>
-  <b>Person:</b>
-  <%= link_to(@current_activity.person.name, @current_activity.person) %>
-</p>
-
-<p>
-  <b>Project:</b>
-  <%= link_to_projects @current_activity.project %> <%= link_to_project_url(@current_activity.project) %>
-</p>
+<p><strong>
+<%= link_to(@current_activity.person.name, @current_activity.person) %>
+working on
+<%= link_to_projects @current_activity.project %> <%= link_to_project_url(@current_activity.project) %>
+</strong></p>
 
 <%= form_for(@current_activity) do |f| %>
   <% if @current_activity.errors.any? %>
@@ -23,7 +19,7 @@
 
   <div class="field">
     <%= f.label :project_id %> (<%= link_to('Edit', edit_project_path(@current_activity.project) )%>)<br />
-    <%= select_tag "current_activity[project_id]", sub_projects_select %>FIXME only show users' projects
+    <%= select_tag "current_activity[project_id]", sub_projects_select(@current_activity.project) %>FIXME only show users' projects
   </div>
   <div class="field">
     <%= f.label :started %><br />

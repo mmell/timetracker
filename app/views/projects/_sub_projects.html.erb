@@ -6,12 +6,14 @@
   <th>Url</th>
 </tr>
 
-<% projects.each do |project| %>
+<% projects.each do |project|
+	next if @project == project %>
 	<tr valign='top' class='row<%= cycle(1, 2) %>'>
     <td><%= button_to('Start', start_project_path(project)) %></td>
-    <td><%= link_to(project.name, project) %></td>
+    <td><%= link_to_projects( project) %></td>
     <td><%= project.hours %></td>
     <td><%= link_to_project_url(project) %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %></td>
   </tr>
 <% end %>
 </table>

@@ -28,6 +28,9 @@ TimeTracker::Application.routes.draw do
     member do
       post :start
     end
+    collection do
+      get :archived
+    end
   end
   
 #  resources :rights

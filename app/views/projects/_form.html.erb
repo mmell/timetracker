@@ -14,7 +14,7 @@
   <div class="field">
     <%= f.label :parent_id %><br />
     <%= select_tag "project[parent_id]", 
-			'<option value="">None</option>'.html_safe + sub_projects_select 
+			'<option value="">None</option>'.html_safe + sub_projects_select(@project.parent_id) 
 			%>
   </div>
   <div class="field">

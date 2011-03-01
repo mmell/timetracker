@@ -5,9 +5,9 @@ module Reports
   require 'reports/daily.rb'
  
   Formats = [
-    ['CSV', 'CSVReport'],
+    ['Activity Detail', 'CSVReport'],
+    ['Project Summary', 'ActivitySummary'],
     ['Daily Activity', 'Daily'],
-    ['Activity Summary', 'ActivitySummary'],
   ]
       
 end

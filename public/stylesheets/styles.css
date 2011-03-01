@@ -5,16 +5,13 @@ body {
   font: 12.6px/18px Verdana, Trebuchet, Arial, Helvetica, sans-serif;
 
   color: #333;
-  border-width: 6px 0px 0px 0px;
-  border-style: solid;
-  border-color: #ff9933;
-}
+ }
 div#wrapper {
   margin: 0px 40px 0px 40px;
   min-width: 610px;
-  border-width: 0px 1px 1px 1px;
+  border-width: 8px 1px 1px 1px;
   border-style: solid;
-  border-color: #003366;
+  border-color: #ff9933 #003366 #003366 #003366;
   background-color: #ffffff;
   /* thanks http://robertnyman.com/2010/03/16/drop-shadow-with-css-for-all-web-browsers */
   -moz-box-shadow: 0px 0px 64px #666;

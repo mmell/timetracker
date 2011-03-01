@@ -7,6 +7,10 @@
 <%= link_to('New Sub-Project', new_project_path(:parent_id => @project)) %>
 </p>
 
+<% if @project.archived? %>
+<div class='alert'>Project has been Archived</div>
+<% end %>
+
 <p>
   <b>Hours:</b>
   <%= @project.hours %>
@@ -17,14 +21,20 @@
   <%= @project.description %>
 </p>
 
+<% unless @project.archived? %>
 <%= button_to('Start Activity', start_project_path(@project)) %>
+<% end %>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Destroy', @project, :confirm => 'Are you sure?', :method => :delete %>
 
 <h2>Activity</h2>
-<%= render :partial => 'activities/list', :locals => { :activities => @project.activities.reverse } %>
+<% if @project.activities.empty? %>
+<em>No Activity recorded</em>
+<% else %>
+	<%= render :partial => 'activities/list', :locals => { :activities => @project.activities.reverse } %>
+<% end %>
 
 <% unless @project.projects.empty? %><h2>Sub-Projects</h2>
-<%= render :partial => 'projects/sub_projects', :locals => { :projects => @project.projects} %>
+<%= render :partial => 'projects/sub_projects', :locals => { :projects => ordered_sub_projects(@project)} %>
 <% end %>

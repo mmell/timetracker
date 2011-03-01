@@ -11,9 +11,7 @@
 </div>
 <div class="field">
   <%= label_tag( :project) %><br />
-  <%= select_tag "project_id", 
-		sub_projects_select(nil, @project) 
-		%>
+  <%= select_tag "project_id", sub_projects_select(@project) %>
 </div>
 <div class="field">
   <%= label_tag( :format) %><br />

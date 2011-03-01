@@ -17,11 +17,12 @@
   </div>
   <div class="field">
     <%= f.label :project_id %><br />
-    <%= select_tag "activity[project_id]", sub_projects_select %>
+    <%= select_tag "activity[project_id]", sub_projects_select(@activity.project) %>
   </div>
   <div class="field">
     <%= f.label :stopped %><br />
-    <%= f.datetime_select :stopped %>
+    <%= f.datetime_select :stopped %> FIXME: show the get_user.local_time(t)<br />
+Now: <%= Time.now.utc %>
   </div>
   <div class="field">
     <%= f.label :minutes %><br />

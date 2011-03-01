@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
 
-  before_filter :get_project, :except => [:index, :new, :create]
+  before_filter :get_project, :except => [:index, :archived, :new, :create]
   before_filter :require_user
 
   # GET /projects

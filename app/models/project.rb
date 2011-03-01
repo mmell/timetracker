@@ -5,14 +5,20 @@ class Project < ActiveRecord::Base
   has_one :current_activity, :dependent => :destroy
   
   scope :active, where(:archived => false)
+  scope :archived, where(:archived => true)
 
 #  validates_presence_of :parent_id
   validates_associated :parent
-
+  validate :parent_not_self
+  
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :parent_id # FIXME add scope of person? but there's no person owner
+  validates_uniqueness_of :name, :scope => :parent_id, :allow_nil => true # FIXME add scope of person? but there's no person owner
   
   before_save :defaults
+
+  def parent_not_self 
+    errors.add(:parent_id, :message => "Parent can't be self") if !new_record? and self.parent_id == self.id
+  end
   
   def defaults
     self.url = 'http://' + self.url unless 0 == (self.url =~ /.*\:\/\/.*/) or self.url.blank?
