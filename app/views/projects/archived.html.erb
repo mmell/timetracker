@@ -1,0 +1,15 @@
+<h1>Listing Active Projects</h1>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th></th>
+  </tr>
+
+<% ordered_sub_projects.each do |project| %>
+	<tr valign='top' class='row<%= cycle(1, 2) %>'>
+    <td><%= link_to_projects( project) %></td>
+    <td><%= link_to_if(!project.url.blank?, project.url, project.url) %></td>
+  </tr>
+<% end %>
+</table>
