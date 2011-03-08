@@ -1,6 +1,7 @@
 <table>
 <tr>
   <th></th>
+  <th>Priority</th>
   <th></th>
   <th>Hours</th>
   <th>Url</th>
@@ -9,12 +10,20 @@
 <% projects.each do |project|
 	next if @project == project %>
 	<tr valign='top' class='row<%= cycle(1, 2) %>'>
-    <td><%= button_to('Start', start_project_path(project)) %></td>
-    <td><%= link_to_projects( project) %></td>
-    <td><%= project.hours %></td>
-    <td><%= link_to_project_url(project) %></td>
-    <td><%= link_to 'Edit', edit_project_path(project) %></td>
-  </tr>
+		<td><%= button_to('Start', start_project_path(project)) %></td>
+		<td align='right'>
+			<%= form_tag( project_position_person_path(get_user), {:id => "project_position#{project.id}"} ) %>
+			<%= hidden_field_tag('project_id', project.id) %>
+			<%= select_tag('move_to', project_position_options(get_user.project_positions.size, get_user.project_position(project).position), 
+			{ :onchange => "document.forms['project_position#{project.id}'].submit();"} 
+			) %>
+		</form>    
+	</td>
+	<td><%= link_to_projects( project) %></td>
+	<td><%= project.hours %></td>
+	<td><%= link_to_project_url(project) %></td>
+	<td><%= link_to 'Edit', edit_project_path(project) %></td>
+</tr>
 <% end %>
 </table>
 

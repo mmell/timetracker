@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
         @end_date = Date.current() - delta.days # first day of this month
         @start_date = @end_date - 14.days # the 1st of the previous month # FIXME
       end
-      @project = (get_user.project.nil? ? get_user.projects.last : get_user.project) # FIXME would crash if user has no activities
+      @project = (get_user.project.nil? ? get_user.projects.last : get_user.project) # FIXME crashes if user has no activities
       return
     end
     @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")
@@ -107,6 +107,18 @@ class PeopleController < ApplicationController
     end
   end
 
+  def project_position
+    project = Project.find(params[:project_id])
+    redirect_opts = {}
+    if project # FIXME: confirm that person has access to project
+      @person.shift_project_position(project, params[:move_to]) 
+      redirect_opts[:notice] = "Successfully shifted the project."
+    else
+      redirect_opts[:alert] = "Project not found."
+    end
+    redirect_to(projects_url, redirect_opts)
+  end
+
   # DELETE /people/1
   # DELETE /people/1.xml
   def destroy
@@ -120,6 +132,7 @@ class PeopleController < ApplicationController
 
   def get_person
     # @user comes from the session and may be different than the target person.
+    # FIXME: enforce security
     @person = Person.find(params[:id])
   end
   private :get_person

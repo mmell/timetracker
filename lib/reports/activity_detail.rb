@@ -10,7 +10,7 @@ class ActivityDetail < Base
     'Minutes',
     'Total Mins',
     'Total Hours',
-    'Notes',
+    'Comments/Notes',
   ]
 
   def initialize(start_date, end_date, project, user)

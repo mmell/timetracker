@@ -4,6 +4,8 @@ class CurrentActivity < ActiveRecord::Base
   
   validates_presence_of :project
   validates_presence_of :person_id
+
+  validates_uniqueness_of :person_id
   
   validates_associated :project
   validates_associated :person

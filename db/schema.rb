@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110114035052) do
+ActiveRecord::Schema.define(:version => 20110308202859) do
 
   create_table "activities", :force => true do |t|
     t.integer  "person_id",   :default => 0, :null => false
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(:version => 20110114035052) do
     t.string   "time_zone",  :default => "Pacific Time (US & Canada)", :null => false
   end
 
+  create_table "project_positions", :force => true do |t|
+    t.integer  "person_id",  :default => 0, :null => false
+    t.integer  "project_id", :default => 0, :null => false
+    t.integer  "position",   :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", :force => true do |t|
     t.string   "name",        :default => "",    :null => false
     t.string   "url",         :default => "",    :null => false
@@ -55,14 +63,6 @@ ActiveRecord::Schema.define(:version => 20110114035052) do
     t.integer  "accessable_id",   :default => 0, :null => false
     t.string   "accessable_type"
     t.string   "right"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "to_dos", :force => true do |t|
-    t.integer  "person_id",  :default => 0, :null => false
-    t.integer  "project_id", :default => 0, :null => false
-    t.integer  "position",   :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

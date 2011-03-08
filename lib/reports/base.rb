@@ -16,7 +16,7 @@ module Reports
     end
     
     def file_name
-      "#{name}_#{@project.report_name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.#{file_ext}"
+      "#{@project.report_name}_#{name}_#{@start_date.strftime('%Y-%m-%d')}_to_#{@end_date.strftime('%Y-%m-%d')}.#{file_ext}"
     end
     
     def each_project_each_activity(project)

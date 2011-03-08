@@ -19,7 +19,7 @@ TimeTracker::Application.routes.draw do
   
   resources :people do
     member do
-      post :login, :logout, :reports
+      post :login, :logout, :reports, :project_position
       get :reports
     end
   end

@@ -1,14 +1,15 @@
-.bundle
+#?? .bundle
 db/*.sqlite3
 log/*.log
 tmp/**/*
 .DS_Store
-thin*
-test.rb
 
 vendor/cache
 db/seeds.rb
 config/database.yml
 
-# temp
-lib/tasks/temp*
+# local
+rails_*
+thin_config
+lib/tasks/temp.rake
+test.rb

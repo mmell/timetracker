@@ -11,8 +11,13 @@
 </div>
 <div class="field">
   <%= label_tag( :project) %><br />
-  <%= select_tag "project_id", sub_projects_select(@project) %>
+  <%# select_tag "project_id", sub_projects_select(@project) %>
+
+	<select name='project_id' id='project_id'>
+	<%= options_from_collection_for_select(Project.root.active, :id, :name, @project) %>
+	</select>
 </div>
+	
 <div class="field">
   <%= label_tag( :format) %><br />
   <%= select_tag "format", 

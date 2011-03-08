@@ -1,7 +1,7 @@
 module Reports
   require 'reports/base.rb'
-  require 'reports/csv_report.rb'
-  require 'reports/activity_summary.rb'
+  require 'reports/activity_detail.rb'
+  require 'reports/project_summary.rb'
   require 'reports/daily.rb'
  
   Formats = [

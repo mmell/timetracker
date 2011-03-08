@@ -16,7 +16,7 @@
     <%= @activity.person.name %>
   </div>
   <div class="field">
-    <%= f.label :project_id %><br />
+    <%= f.label :project_id %> (<%= link_to_projects(@activity.project) %>)<br />
     <%= select_tag "activity[project_id]", sub_projects_select(@activity.project) %>
   </div>
   <div class="field">

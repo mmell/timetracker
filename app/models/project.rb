@@ -3,7 +3,9 @@ class Project < ActiveRecord::Base
   has_many :projects, :order => :name, :foreign_key => :parent_id, :dependent => :destroy
   has_many :activities, :order => :stopped, :dependent => :destroy
   has_one :current_activity, :dependent => :destroy
+  has_many :project_positions, :dependent => :destroy
   
+  scope :root, where(:parent_id => nil).order(:name)
   scope :active, where(:archived => false)
   scope :archived, where(:archived => true)
 
@@ -31,7 +33,8 @@ class Project < ActiveRecord::Base
     }
   end
 
-  def work_category
+  def work_category 
+    # FIXME: provide UI and column to allow user to choose
     'M'
   end
 
@@ -56,12 +59,4 @@ class Project < ActiveRecord::Base
     "%6.2f" % [ @hours ]
   end
         
-  def shift_to_do_position(moving_to_do, move_to)
-    list = self.to_dos.dup
-    list.delete(moving_to_do)
-    list.insert(move_to.to_i() -1, moving_to_do)
-    list.each_index { |ix|
-      list[ix].update_attribute( :position, ix +1)
-    }
-  end
 end
