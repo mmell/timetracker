@@ -5,7 +5,7 @@ class ProjectPosition < ActiveRecord::Base
   validates_associated :person
   validates_associated :project
 
-  validates_numericality_of(:position)
+  validates_numericality_of(:position, :greater_than => 0)
   validates_uniqueness_of( :position, :scope => :person_id )
   
 end

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
 
-  before_filter :get_project, :except => [:index, :archived, :new, :create]
+  before_filter :get_project, :except => [:index, :archived, :new, :create, :priority]
   before_filter :require_user
 
   # GET /projects
@@ -12,6 +12,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def priority
+    
+  end
+  
   # GET /projects/1
   # GET /projects/1.xml
   def show   

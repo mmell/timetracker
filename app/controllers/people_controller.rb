@@ -112,7 +112,7 @@ class PeopleController < ApplicationController
     redirect_opts = {}
     if project # FIXME: confirm that person has access to project
       @person.shift_project_position(project, params[:move_to]) 
-      redirect_opts[:notice] = "Successfully shifted the project."
+      redirect_opts[:notice] = "Successfully set the project priority."
     else
       redirect_opts[:alert] = "Project not found."
     end

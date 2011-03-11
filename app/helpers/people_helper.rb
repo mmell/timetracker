@@ -5,7 +5,11 @@ module PeopleHelper
     s = "<option value='0'>&mdash;</option>"
     s << (1 .. ct).map { |e| 
       "<option value='#{e}'#{e == ix ? " selected='selected'" : ''}>#{e}</option>" 
-    }.join('') 
+    }.join('')
+    if ix == 0 
+      ct += 1
+      s << "<option value='#{ct}'>#{ct}</option>" 
+    end
     s.html_safe
   end
 

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.4'
+gem 'rails', '3.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -29,3 +29,11 @@ gem 'mysql2'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+
+group :development, :test do
+	gem "rspec-rails", ">= 2.5.0"
+	gem "ZenTest", "~> 4.4.2"
+	gem "autotest-rails", "~> 4.1.0"
+	gem 'factory_girl_rails'
+end

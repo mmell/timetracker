@@ -29,7 +29,7 @@ TimeTracker::Application.routes.draw do
       post :start
     end
     collection do
-      get :archived
+      get :archived, :priority
     end
   end
   
