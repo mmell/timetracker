@@ -1,9 +1,8 @@
 module PeopleHelper
 
   def project_position_options(ct, ix)
-    ct = [1, ct].max
     s = "<option value='0'>&mdash;</option>"
-    s << (1 .. ct).map { |e| 
+    s << (1 .. ct).map { |e|
       "<option value='#{e}'#{e == ix ? " selected='selected'" : ''}>#{e}</option>" 
     }.join('')
     if ix == 0 

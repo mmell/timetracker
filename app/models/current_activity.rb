@@ -2,10 +2,10 @@ class CurrentActivity < ActiveRecord::Base
   belongs_to :project
   belongs_to :person
   
-  validates_presence_of :project
+  validates_presence_of :project_id
   validates_presence_of :person_id
 
-  validates_uniqueness_of :person_id
+# conflicts with existing activity   validates_uniqueness_of :person_id
   
   validates_associated :project
   validates_associated :person

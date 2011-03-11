@@ -18,3 +18,7 @@ end
 
 Factory.define :project_position do |f|
 end
+
+Factory.define :current_activity do |f|
+  f.started { 1.hour.ago }
+end
