@@ -13,7 +13,8 @@ class Project < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :parent_id, :allow_nil => true # FIXME add scope of person? but there's no person owner
   
   before_save :defaults
-
+  after_save :check_archived
+  
   scope :root, where(:parent_id => nil).order(:name)
   scope :active, where(:archived => false)
   scope :archived, where(:archived => true)
@@ -25,7 +26,13 @@ class Project < ActiveRecord::Base
   def defaults
     self.url = 'http://' + self.url unless 0 == (self.url =~ /.*\:\/\/.*/) or self.url.blank?
   end
-    
+
+  def check_archived
+    if archived?
+      project_positions.clear
+    end
+  end
+  
   def work_categories
     # FIXME these can be db items if any projects wants other values
     {
