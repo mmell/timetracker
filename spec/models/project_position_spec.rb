@@ -6,7 +6,7 @@ describe ProjectPosition do
     subject.position.should == 0
   end
 
-  it "resorts the persons projects after Im gone" do
+  it "re-sorts the persons projects after project_position is gone" do
     parent_project = Factory.create(:project)
     person = Factory.create(:person)
     projects = [Factory.create(:project, :parent => parent_project)]
@@ -24,7 +24,8 @@ describe ProjectPosition do
     projects[0].update_attributes(:archived => true)
 
     person = Person.find(person.id)
-    person.project_position(projects[0]).position.should == 0 # a new record
+    person.project_position(projects[0]).new_record?.should be_true
+    person.project_position(projects[0]).position.should == 0
     person.project_position(projects[1]).position.should == 1
     person.project_position(projects[2]).position.should == 2
     person.project_positions.map { |e| e.position }.should == [1, 2]

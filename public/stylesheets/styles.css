@@ -3,7 +3,7 @@ body {
   padding: 0px;
   background: #ffffff url(/images/template/background_tile_h1024.png) repeat-x 0px 0px;
   font: 12.6px/18px Verdana, Trebuchet, Arial, Helvetica, sans-serif;
-
+  min-height: 400px;
   color: #333;
  }
 div#wrapper {
@@ -28,11 +28,10 @@ div.content {
 }
 div#top {
   margin: 0px 40px 10px 40px;
-  padding: 0px;
   border-width: 0px 1px 1px 1px;
   -moz-border-radius: 0px 0px 8px 8px;
   border-radius: 0px 0px 8px 8px;
-  height: 120px;
+  min-height: 70px;
 }
 div#current_activity {
   margin: 0px 40px 10px 40px;
@@ -46,6 +45,7 @@ div#current_activity h4, div#current_activity h3 {
 }
 div#middle {
   margin: 0px 40px 10px 185px;
+  min-height: 300px;
 }
 div#left_col {
   float: left;

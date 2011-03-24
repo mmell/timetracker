@@ -15,7 +15,14 @@ class CurrentActivity < ActiveRecord::Base
   before_create :stop_user
   
   before_destroy :archive_activity
-
+  before_validation :defaults
+  
+  def defaults
+    if self.new_record? and self.description.blank? and !self.project.activities.empty?
+      self.description = self.project.activities.last.description
+    end
+  end
+  
   def archive_activity
     @archive_activity ||= Activity.create( # don't allow duplicates
       :person_id => self.person_id,

@@ -3,7 +3,7 @@ thanks http://css.maxdesign.com.au/floatutorial/tutorial0613.htm
 */
 ul.nav_base_horizontal {
   padding: 0px;
-  margin: 0px;
+  margin: 0px 0px;
   list-style-type: none;
   float: left;
   width: 100%;
@@ -12,7 +12,7 @@ ul.nav_base_horizontal {
 ul.nav_base_horizontal li { 
   display: inline;
   font: 13px Arial, Helvetica, sans-serif; 
-  display: inline;
+  font-weight: bold;
   list-style-type: none; 
 }
 

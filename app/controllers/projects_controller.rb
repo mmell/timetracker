@@ -91,7 +91,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @current_activity.save
-        format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => 'Current activity was successfully created.') }
+        format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => "Successfully started activity for #{@project.name}.") }
         format.xml  { render :xml => @current_activity, :status => :created, :location => @current_activity }
       else
         format.html { redirect_to(@current_activity, :notice => @current_activity.errors) }

@@ -116,7 +116,7 @@ class PeopleController < ApplicationController
     else
       redirect_opts[:alert] = "Project not found."
     end
-    redirect_to(projects_url, redirect_opts)
+    redirect_to(:back, redirect_opts)
   end
 
   # DELETE /people/1
