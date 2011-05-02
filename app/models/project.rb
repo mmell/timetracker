@@ -45,6 +45,14 @@ class Project < ActiveRecord::Base
     'M'
   end
 
+  def parent_name
+    if parent_id
+      parent.name
+    else
+      nil
+    end
+  end
+  
   def fullname
     if parent_id
       "#{parent.fullname}::#{self.name}"

@@ -19,6 +19,10 @@ describe Person do
     Person.new.project_position(project).position.should == 0
   end
   
+  it "returns a time" do
+    subject.local_time(Time.now.utc).should be_a(Time) 
+  end
+
   context "confirm project position" do
     subject { Factory.create(:person) }
     

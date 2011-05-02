@@ -114,6 +114,7 @@ class CurrentActivitiesController < ApplicationController
       redirect_to(all_activities_url, :alert => "You don't have a current activity.")
       return false
     end
+    @project = @current_activity.project
   end
   
 end

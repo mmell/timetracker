@@ -14,8 +14,18 @@ describe Project do
     person = Factory.create(:person)
     project_position = Factory.create(:project_position, :project => project, :person => person, :position => 1)
     project.update_attributes(:archived => true)
-    expect { ProjectPosition.find(project_position.id) }.to raise_error(ActiveRecord::RecordNotFound)
-    
+    expect { ProjectPosition.find(project_position.id) }.to raise_error(ActiveRecord::RecordNotFound)    
+  end
+  
+  it "has a parent_name" do
+    project = Factory.create(:project)
+    project.parent_name.should == nil
+  end
+  
+  it "has a parent_name" do
+    parent = Factory.create(:project)
+    project = Factory.create(:project, :parent => parent)
+    project.parent_name.should == parent.name
   end
   
 end

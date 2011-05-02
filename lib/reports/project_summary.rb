@@ -1,63 +1,65 @@
 module Reports
-class ProjectSummary < Base
+  class ProjectSummary < Base
    
-  FILE_EXT = 'txt'
-  Summary = Struct.new(:name, :minutes, :url)
+    FILE_EXT = 'txt'
+    Summary = Struct.new(:name, :minutes, :url)
     
-  def initialize(start_date, end_date, project, user)
-    super(start_date, end_date, project, user)
-    @data = {} # FAILS: Hash.new(Summary.new(0, nil))
+    def initialize(start_date, end_date, project, user)
+      super(start_date, end_date, project, user)
+      @data = {} # FAILS: Hash.new(Summary.new(0, nil))
     
-    add_header_lines
+      add_header_lines
     
-    each_project_each_activity(@project)
+      each_project_each_activity(@project)
 
-    add_final_totals_lines
-  end
+      add_final_totals_lines
+    end
   
-  def add_header_lines
-    add_line( [
-      'Dates', 
-      "From #{@start_date.strftime('%Y-%m-%d')}", 
-      "Until #{@end_date.strftime('%Y-%m-%d')}"
-    ] )
-  end
+    def add_header_lines
+      add_line( [
+        'Dates', 
+        "From #{@start_date.strftime('%Y-%m-%d')}", 
+        "Through #{@end_date.strftime('%Y-%m-%d')}"
+      ] )
+    end
     
-  def each_activity(project)
-    project_activities(project).each { |activity|
-      id = activity.project.id
-      @data[id] ||= Summary.new(activity.project.name, 0, nil)
-      @data[id].minutes += activity.minutes
-      @data[id].url ||= activity.project.url
-    }
-  end
+    def each_activity(project)
+      project_activities(project).each { |activity|
+        id = activity.project.id
+        name = (activity.project.parent_name.nil? ? '' : "#{activity.project.parent.name}::")
+        name << activity.project.name
+        @data[id] ||= Summary.new(name, 0, nil)
+        @data[id].minutes += activity.minutes
+        @data[id].url ||= activity.project.url
+      }
+    end
   
-  def add_final_totals_lines()
-    add_blank_line
+    def add_final_totals_lines()
+      add_blank_line
 
-    @data.keys.sort { |a, b| @data[a].name <=> @data[b].name }.each { |e| 
-      add_line( [ '  ', format_hours(@data[e].minutes() /60.0), @data[e].name, @data[e].url ] ) 
-    } 
+      @data.keys.sort { |a, b| @data[a].name <=> @data[b].name }.each { |e| 
+        add_line( [ '  ', format_hours(@data[e].minutes() /60.0), @data[e].name, @data[e].url ] ) 
+      } 
 
-    add_blank_line
-    add_line( [
-      'Total Hours'
-    ] )
-    add_line( [
-      '', total_hours
-    ] )
+      add_blank_line
+      add_line( [
+        'Total Hours'
+      ] )
+      add_line( [
+        '', total_hours
+      ] )
     
-    add_blank_line
-    add_line( ['Report generated at', Time.now.to_s] )
-  end
+      add_blank_line
+      add_line( ['Report generated at', Time.now.to_s] )
+    end
   
-  def total_hours
-    format_hours( @data.keys.inject(0) { |memo, e| memo + @data[e].minutes } / 60.0 )
-  end
+    def total_hours
+      format_hours( @data.keys.inject(0) { |memo, e| memo + @data[e].minutes } / 60.0 )
+    end
   
-  def render
-    @lines.map { |e| e.join("\t") }.join("\n")
-  end
+    def render
+      @lines.map { |e| e.join("\t") }.join("\n")
+    end
   
-end
+  end
 end

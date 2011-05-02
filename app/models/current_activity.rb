@@ -18,7 +18,7 @@ class CurrentActivity < ActiveRecord::Base
   before_validation :defaults
   
   def defaults
-    if self.new_record? and self.description.blank? and !self.project.activities.empty?
+    if self.new_record? and self.description.blank? and self.project and !self.project.activities.empty?
       self.description = self.project.activities.last.description
     end
   end
