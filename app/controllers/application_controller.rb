@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   
   def require_user
     unless get_user
-      redirect_to(Person, :alert => "Please sign on.")
+      redirect_to(Person, :alert => "Please sign in.")
       return false
     end
     true

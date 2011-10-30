@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :person_id %><br />
+    <%= f.label :person_id %>: 
     <%= @activity.person.name %>
   </div>
   <div class="field">
@@ -29,7 +29,7 @@ Now: <%= Time.now.utc %>
     <%= f.text_field :minutes %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label :description, "Activity Description" %><br />
     <%= f.text_area_local :description %>
   </div>
   <div class="actions">

@@ -1,3 +1,1 @@
-<li><%= link_to('New Project', new_project_path) %></li>
-<% if @project %><li><%= link_to('New Sub-Project', new_project_path(:parent_id => @project)) %></li><% end %>
-
+<li><%= link_to('New Project', new_project_path(:parent_id => @project)) %></li>
