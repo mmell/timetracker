@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :parent_id, :allow_nil => true # FIXME add scope of person? but there's no person owner
   
-  before_save :defaults
+  after_initialize :defaults
   after_save :check_archived
   
   scope :root, where(:parent_id => nil).order(:name)

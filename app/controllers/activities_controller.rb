@@ -98,4 +98,25 @@ class ActivitiesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def start
+    @activity = get_user.activities.find(params[:id])
+    @current_activity = CurrentActivity.new(
+      :started => Time.now,
+      :person_id => get_user.id,
+      :project_id => @activity.project_id,
+      :description => @activity.description
+    )
+
+    respond_to do |format|
+      if @current_activity.save
+        format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => "Successfully started activity for #{@activity.project.name}.") }
+        format.xml  { render :xml => @current_activity, :status => :created, :location => @current_activity }
+      else
+        format.html { redirect_to(@current_activity, :notice => @current_activity.errors) }
+        format.xml  { render :xml => @current_activity.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end

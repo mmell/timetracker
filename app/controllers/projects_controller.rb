@@ -99,7 +99,37 @@ class ProjectsController < ApplicationController
       end
     end
   end
+  
+  def start
+    @current_activity = CurrentActivity.new(
+      :started => Time.now,
+      :person_id => get_user.id,
+      :project_id => params[:id]
+    )
 
+    respond_to do |format|
+      if @current_activity.save
+        format.html { redirect_to(edit_current_activity_path(@current_activity), :notice => "Successfully started activity for #{@project.name}.") }
+        format.xml  { render :xml => @current_activity, :status => :created, :location => @current_activity }
+      else
+        format.html { redirect_to(@current_activity, :notice => @current_activity.errors) }
+        format.xml  { render :xml => @current_activity.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def archive_toggle
+    respond_to do |format|
+      if @project.update_attribute(:archived, !@project.archived)
+        format.html { redirect_to(@project.parent, :notice => "Project: #{@project.name} was successfully archived.") }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
   def get_project
     @project = Project.find(params[:id])
   end

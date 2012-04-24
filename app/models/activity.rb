@@ -8,7 +8,7 @@ class Activity < ActiveRecord::Base
   validates_associated :project
   validates_associated :person
     
-  before_save :defaults
+  after_initialize :defaults
   
   def defaults
     self.stopped ||= DateTime.now.utc

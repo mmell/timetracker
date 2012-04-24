@@ -9,7 +9,7 @@
 
 <% activities.each do |activity| %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
-    <td><%= button_to('Start', start_project_path(activity.project)) %></td>
+    <td><%= button_to('Start', start_activity_path(activity)) %></td>
     <td><%= link_to_projects(activity.project) %></td>
     <td><%= activity.stopped.localtime %></td>
     <td align='right'><%= activity.hours %></td>

@@ -23,6 +23,7 @@
 	<td><%= project.hours %></td>
 	<td><%= link_to_project_url(project) %></td>
 	<td><%= link_to 'Edit', edit_project_path(project) %></td>
+	<td><%= button_to((project.archived? ? 'Unarchive' : 'Archive'), archive_toggle_project_path(project)) %></td>
 </tr>
 <% end %>
 </table>

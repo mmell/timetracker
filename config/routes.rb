@@ -6,6 +6,10 @@ TimeTracker::Application.routes.draw do
   get "static/legal"
 
   resources :activities do
+    member do
+      post :start
+    end
+
     collection do
       get :all
     end
@@ -26,8 +30,9 @@ TimeTracker::Application.routes.draw do
 
   resources :projects do
     member do
-      post :start
+      post :start, :archive_toggle
     end
+
     collection do
       get :archived, :priority
     end

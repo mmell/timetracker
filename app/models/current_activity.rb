@@ -15,11 +15,11 @@ class CurrentActivity < ActiveRecord::Base
   before_create :stop_user
   
   before_destroy :archive_activity
-  before_validation :defaults
+  after_initialize :defaults
   
   def defaults
-    if self.new_record? and self.description.blank? and self.project and !self.project.activities.empty?
-      self.description = self.project.activities.last.description
+    if self.project and !self.project.activities.empty?
+      self.description ||= self.project.activities.last.description
     end
   end
   
