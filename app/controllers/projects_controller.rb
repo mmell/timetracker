@@ -121,7 +121,7 @@ class ProjectsController < ApplicationController
   def archive_toggle
     respond_to do |format|
       if @project.update_attribute(:archived, !@project.archived)
-        format.html { redirect_to(@project.parent, :notice => "Project: #{@project.name} was successfully archived.") }
+        format.html { redirect_to((@project.parent or root_path), :notice => "Project: #{@project.name} was successfully archived.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

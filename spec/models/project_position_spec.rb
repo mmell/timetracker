@@ -7,14 +7,14 @@ describe ProjectPosition do
   end
 
   it "re-sorts the persons projects after project_position is gone" do
-    parent_project = Factory.create(:project)
-    person = Factory.create(:person)
-    projects = [Factory.create(:project, :parent => parent_project)]
-    Factory.create(:project_position, :project => projects[0], :person => person, :position => 1)
-    projects << Factory.create(:project, :parent => parent_project)
-    Factory.create(:project_position, :project => projects[1], :person => person, :position => 2)
-    projects << Factory.create(:project)
-    Factory.create(:project_position, :project => projects[2], :person => person, :position => 3)
+    parent_project = FactoryGirl.create(:project)
+    person = FactoryGirl.create(:person)
+    projects = [FactoryGirl.create(:project, :parent => parent_project)]
+    FactoryGirl.create(:project_position, :project => projects[0], :person => person, :position => 1)
+    projects << FactoryGirl.create(:project, :parent => parent_project)
+    FactoryGirl.create(:project_position, :project => projects[1], :person => person, :position => 2)
+    projects << FactoryGirl.create(:project)
+    FactoryGirl.create(:project_position, :project => projects[2], :person => person, :position => 3)
 
     person.project_position(projects[0]).position.should == 1
     person.project_position(projects[1]).position.should == 2

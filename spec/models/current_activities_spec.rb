@@ -7,14 +7,14 @@ describe CurrentActivity do
   end
 
   it "validates with associations" do
-    Factory.create(:current_activity, :person => Factory.create(:person), :project => Factory.create(:project)).valid?.should be_true 
+    FactoryGirl.create(:current_activity, :person => FactoryGirl.create(:person), :project => FactoryGirl.create(:project)).valid?.should be_true 
   end
 
   context "a current activity exists" do
-    subject { Factory.create(:current_activity, :person => Factory.create(:person), :project => Factory.create(:project)) }
+    subject { FactoryGirl.create(:current_activity, :person => FactoryGirl.create(:person), :project => FactoryGirl.create(:project)) }
 
     it "destroys the existing one" do
-      Factory.create(:current_activity, :person => subject.person, :project => subject.project)
+      FactoryGirl.create(:current_activity, :person => subject.person, :project => subject.project)
       expect { CurrentActivity.find(subject.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end

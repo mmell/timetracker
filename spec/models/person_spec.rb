@@ -11,7 +11,7 @@ describe Person do
   end
 
   it "passes validation with a name and email" do
-    Person.new(:name => "liquid nitrogen", :email => Factory.next(:email)).valid?.should be_true
+    Person.new(:name => "liquid nitrogen", :email => FactoryGirl.generate(:email)).valid?.should be_true
   end
 
   it "builds a new ProjectPosition" do
@@ -24,40 +24,40 @@ describe Person do
   end
 
   context "confirm project position" do
-    subject { Factory.create(:person) }
+    subject { FactoryGirl.create(:person) }
     
     it "finds the existing ProjectPosition" do
-      project = Factory.create(:project)
-      project_position = Factory.create(:project_position, :project => project, :person => subject, :position => 1)
+      project = FactoryGirl.create(:project)
+      project_position = FactoryGirl.create(:project_position, :project => project, :person => subject, :position => 1)
       subject.project_position(project).position.should == 1
     end
 
     it "sequences positions" do
-      project = Factory.create(:project)
-      project_position = Factory.create(:project_position, :project => project, :person => subject, :position => 12)
+      project = FactoryGirl.create(:project)
+      project_position = FactoryGirl.create(:project_position, :project => project, :person => subject, :position => 12)
       subject.shift_project_position(project, 3)
       subject.project_position(project).position.should == 1
     end
 
     it "finds the existing ProjectPosition when there are three" do
-      project0 = Factory.create(:project)
+      project0 = FactoryGirl.create(:project)
       project = nil # define outside the loop
       3.times do |ix|
-        project = Factory.create(:project)
-        Factory.create(:project_position, :project => project, :person => subject, :position => ix +1)
+        project = FactoryGirl.create(:project)
+        FactoryGirl.create(:project_position, :project => project, :person => subject, :position => ix +1)
       end
       subject.project_position(project).position.should == 3
       subject.project_position(project0).position.should == 0
     end
 
     it "resorts three projects" do
-      parent_project = Factory.create(:project)
-      projects = [Factory.create(:project, :parent => parent_project)]
-      Factory.create(:project_position, :project => projects[0], :person => subject, :position => 1)
-      projects << Factory.create(:project, :parent => parent_project)
-      Factory.create(:project_position, :project => projects[1], :person => subject, :position => 2)
-      projects << Factory.create(:project)
-      Factory.create(:project_position, :project => projects[2], :person => subject, :position => 3)
+      parent_project = FactoryGirl.create(:project)
+      projects = [FactoryGirl.create(:project, :parent => parent_project)]
+      FactoryGirl.create(:project_position, :project => projects[0], :person => subject, :position => 1)
+      projects << FactoryGirl.create(:project, :parent => parent_project)
+      FactoryGirl.create(:project_position, :project => projects[1], :person => subject, :position => 2)
+      projects << FactoryGirl.create(:project)
+      FactoryGirl.create(:project_position, :project => projects[2], :person => subject, :position => 3)
       
       projects.map { |e| subject.project_position(e).position }.should == [1, 2, 3]
 
