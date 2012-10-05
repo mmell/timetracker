@@ -21,7 +21,9 @@
   </div>
   <div class="field">
     <%= f.label :stopped %><br />
-    <%= f.datetime_select :stopped %> FIXME: show the get_user.local_time(t)<br />
+    <%= f.datetime_select :stopped %>
+(<%= get_user.local_time(@activity.stopped) %>)
+<br />
 Now: <%= Time.now.utc %>
   </div>
   <div class="field">
