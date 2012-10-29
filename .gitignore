@@ -1,4 +1,3 @@
-.rvmrc
 .bundle
 db/*.sqlite3
 log/*.log
@@ -10,7 +9,5 @@ db/seeds.rb
 config/database.yml
 
 # local
-rails_*
 config/thin.yml
-lib/tasks/temp.rake
 test.rb

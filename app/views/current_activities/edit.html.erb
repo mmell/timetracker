@@ -3,12 +3,13 @@
 <div style='float: right;' class='content'>
 <h3>Adjust Start Time</h3>
 <%= form_tag( {:id => @current_activity.id, :action => :adjust_start}, { :id => 'adjust_minutes'} ) do |f| %>
+   <%= radio_button_tag :direction, 'earlier' %> Earlier
+   <%= radio_button_tag :direction, 'later', { :selected => true} %> Later
+
   <div class="field">
-<%= text_field_tag :adjustment, '0', :size => 4 %>
-<%= label_tag( :minutes) %>
+		<%= text_field_tag :adjustment, '0', :size => 4 %>
+		<%= label_tag( :minutes) %>
   </div>
-    <%= radio_button_tag :direction, 'earlier' %> Earlier
-    <%= radio_button_tag :direction, 'later', { :selected => true} %> Later
 
   <div class="actions">
     <%= submit_tag('Adjust') %>
