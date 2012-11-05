@@ -1,16 +1,17 @@
 <h1>Editing Current Activity</h1>
 
-<div style='float: right;' class='content'>
+<div style='float: right;' class='content' id='adjust_minutes'>
 <h3>Adjust Start Time</h3>
-<%= form_tag( {:id => @current_activity.id, :action => :adjust_start}, { :id => 'adjust_minutes'} ) do |f| %>
-   <%= radio_button_tag :direction, 'earlier' %> Earlier
-   <%= radio_button_tag :direction, 'later', { :selected => true} %> Later
-
+<%= form_tag( adjust_start_current_activity_path(@current_activity.id) ) do |f| %>
   <div class="field">
-		<%= text_field_tag :adjustment, '0', :size => 4 %>
-		<%= label_tag( :minutes) %>
+		<%= label_tag( :minutes) %><br />
+    
+		<%= text_field_tag :minutes_earlier, '0', :size => 4 %>
+		<%= label_tag( :earlier) %>
+    <br />
+		<%= text_field_tag :minutes_later, '0', :size => 4 %>
+		<%= label_tag( :later) %>
   </div>
-
   <div class="actions">
     <%= submit_tag('Adjust') %>
   </div>
@@ -18,7 +19,7 @@
 </div>
 
 <script type="text/javascript"> 
-document.forms['adjust_minutes'].elements['adjustment'].focus();
+document.forms['adjust_minutes'].elements['minutes_later'].focus();
 </script>
 
 <%= render 'form' %>

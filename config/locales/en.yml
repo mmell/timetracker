@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+
+  # # thanks http://stackoverflow.com/questions/3654974/where-to-put-time-format-rules-in-rails-3
+  #   time:
+  #     formats:
+  #       intl_local: '%Y-%m-%d %I:%M %Z'

@@ -17,7 +17,8 @@ TimeTracker::Application.routes.draw do
   
   resources :current_activities do
     member do
-      post :adjust_start, :cancel, :restart
+      post 'adjust_start' => "current_activities#adjust_start", as: :adjust_start
+      post :cancel, :restart
     end
   end
   

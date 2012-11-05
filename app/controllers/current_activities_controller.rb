@@ -69,9 +69,12 @@ class CurrentActivitiesController < ApplicationController
   end
 
   def adjust_start
-    minutes = params[:adjustment].to_i.minutes
-    minutes = (params[:direction] == 'later' ? minutes : 0 - minutes) 
-    @current_activity.update_attributes(:started => (@current_activity.started + minutes) )
+    if params[:minutes_earlier] != '0'
+      started = @current_activity.started - params[:minutes_earlier].to_i.minutes
+    elsif params[:minutes_later] != '0'
+      started = @current_activity.started + params[:minutes_later].to_i.minutes
+    end
+    @current_activity.update_attributes(:started => started )
 
     respond_to do |format|
       format.html { redirect_to(edit_current_activity_url(@current_activity), :notice => 'Current activity was successfully updated.') }
