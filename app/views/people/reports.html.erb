@@ -2,20 +2,22 @@
 
 <%= form_tag( ) do |f| %>
 <div class="field">
-  <%= label_tag( :from) %><br />
-  <%= select_date(@start_date, :prefix => :from) %>
-</div>
-<div class="field">
-  <%= label_tag( :through) %><br />
-  <%= select_date(@end_date, :prefix => :until) %>
-</div>
-<div class="field">
   <%= label_tag( :project) %><br />
   <%# select_tag "project_id", sub_projects_select(@project) %>
 
 	<select name='project_id' id='project_id'>
 	<%= options_from_collection_for_select(Project.root.active, :id, :name, @project) %>
 	</select>
+
+<div class="field">
+  <%= label_tag( :from) %><br />
+  <%= select_date(@start_date, :prefix => :from) %>
+</div>
+
+<div class="field">
+  <%= label_tag( :through) %><br />
+  <%= select_date(@end_date, :prefix => :until) %>
+</div>
 </div>
 	
 <div class="field">

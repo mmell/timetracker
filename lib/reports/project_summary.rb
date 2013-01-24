@@ -40,7 +40,7 @@ module Reports
     def add_final_totals_lines()
       add_blank_line
       add_line( [
-        'Tasks'
+        'Task Hours'
       ] )
       @data.keys.sort { |a, b| @data[a].name <=> @data[b].name }.each { |e| 
         add_line( [ '  ', format_hours(@data[e].minutes() /60.0), @data[e].name, @data[e].url ] ) 
