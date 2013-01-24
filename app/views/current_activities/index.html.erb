@@ -14,7 +14,7 @@
 <% @current_activities.each do |current_activity| %>
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
     <td><%= current_activity.project.name %></td>
-    <td><%= current_activity.started.localtime %></td>
+    <td><%= current_activity.started.localtime %> (local)</td>
     <td align='right'><%= current_activity.hours %></td>
     <td><%= current_activity.description %></td>
     <td><%= link_to 'Show', current_activity %></td>

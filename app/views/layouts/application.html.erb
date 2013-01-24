@@ -13,14 +13,14 @@
 <% if get_user -%>
 <ul class='nav_base_horizontal' id='dependability_bar'>
 	<li><%= get_user.name %></li>
-	<li><%= link_to('Account', get_user, :class => link_class(get_user)) %></li>
+	<li><%= link_to('Account', get_user, class: link_class(get_user)) %></li>
 </ul>
 
 <ul class='nav_base_horizontal' id='main_nav'>
-	<li><%= link_to("Activities Today", activities_path, :class => link_class(activities_path)) %></li>
-	<li><%= link_to("Recent Activities", all_activities_path, :class => link_class(all_activities_path)) %></li>
+	<li><%= link_to("Activities Today", activities_path, class: link_class(activities_path)) %></li>
+	<li><%= link_to("Recent Activities", all_activities_path, class: link_class(all_activities_path)) %></li>
 	<li><%= link_to('Reports', reports_person_path(get_user), 
-		:class => link_class(reports_person_path(get_user))) %></li>
+		class: link_class(reports_person_path(get_user))) %></li>
 </ul>
 <% end -%>
 </div>
@@ -34,7 +34,7 @@
 	<li><%= link_to 'Stop', get_user.current_activity, :confirm => 'Are you sure?', :method => :delete %></li>
 	<li><%= link_to 'Cancel', cancel_current_activity_path(get_user.current_activity), :confirm => 'Are you sure you want to Cancel?', :method => :post %></li>
 	<li><%= link_to 'Restart', restart_current_activity_path(get_user.current_activity), :confirm => 'Are you sure Restart the timer?', :method => :post %></li>
-	<li><%= link_to 'Edit', edit_current_activity_path(get_user.current_activity) %></li>
+	<li><%= link_to 'Edit', edit_current_activity_path(get_user.current_activity), class: link_class( edit_current_activity_path(get_user.current_activity)) %></li>
 </ul>
 </div>
 <% end -%>
@@ -42,10 +42,12 @@
 <div class='content' id='left_col'>
 <% if get_user -%>
 <ul class='nav_base_vertical' id='left_nav'>
-	<li><%= link_to( 'Projects', projects_path, :class => link_class(projects_path) )%></li>
-	<li><%= link_to( 'Priorities', priority_projects_path, :class => link_class(priority_projects_path) )%></li>
+	<li><%= link_to( 'Projects', projects_path, class: link_class(projects_path) )%></li>
+  <li><%= link_to('New Project', new_project_path(:parent_id => @project), class: link_class(new_project_path(parent_id: @project))) %></li>
+  
+	<li><%= link_to( 'Priorities', priority_projects_path, class: link_class(priority_projects_path) )%></li>
 	<li><%= link_to( 'Archived Projects', archived_projects_path) %></li>
-	<li><%= link_to( 'People', people_path, :class => link_class(people_path) )%></li>
+	<li><%= link_to( 'People', people_path, class: link_class(people_path) )%></li>
 </ul>   
 <% end -%>
 </div>

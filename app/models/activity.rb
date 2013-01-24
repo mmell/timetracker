@@ -1,4 +1,8 @@
+require 'activity_time'
+
 class Activity < ActiveRecord::Base
+  include ActivityTime
+
   belongs_to :project
   belongs_to :person
   
@@ -11,7 +15,7 @@ class Activity < ActiveRecord::Base
   after_initialize :defaults
   
   def defaults
-    self.stopped ||= DateTime.now.utc
+    self.stopped ||= now
     self.description = self.description.strip
   end
   

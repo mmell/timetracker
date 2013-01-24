@@ -1,4 +1,7 @@
+require 'activity_time'
+
 class ActivitiesController < ApplicationController
+  include ActivityTime
 
   before_filter :require_user
   
@@ -102,7 +105,7 @@ class ActivitiesController < ApplicationController
   def start
     @activity = get_user.activities.find(params[:id])
     @current_activity = CurrentActivity.new(
-      :started => Time.now,
+      :started => now,
       :person_id => get_user.id,
       :project_id => @activity.project_id,
       :description => @activity.description

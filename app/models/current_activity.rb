@@ -1,4 +1,8 @@
+require 'activity_time'
+
 class CurrentActivity < ActiveRecord::Base
+  include ActivityTime
+  
   belongs_to :project
   belongs_to :person
   
@@ -33,7 +37,7 @@ class CurrentActivity < ActiveRecord::Base
   end
   
   def minutes
-    (DateTime.now.to_i - self.started.to_i) / 60 
+    (now.to_i - self.started.to_i) / 60 
   end
   
   def stop_user
