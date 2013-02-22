@@ -14,6 +14,7 @@ FactoryGirl.define do
 
   factory :project do |f|
     f.sequence(:name) { |n| "Project #{n.to_s.rjust(4, '0')}" }
+    f.description ''
   end
 
   factory :project_position do |f|
@@ -21,6 +22,7 @@ FactoryGirl.define do
 
   factory :current_activity do |f|
     f.started { 1.hour.ago }
+    f.description ''
   end
 
 end

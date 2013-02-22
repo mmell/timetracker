@@ -17,9 +17,7 @@ module ApplicationHelper
     @ordered_sub_projects ||= []
     @ordered_sub_projects << parent_project if parent_project
     opts = { :archived => false }.merge(opts)
-    conditions = "archived = #{opts[:archived]}"
-    Project.find_all_by_parent_id(parent_project, 
-      :conditions => conditions,
+    Project.where(archived: opts[:archived]).find_all_by_parent_id(parent_project, 
 			:order => "projects.name"                                                     
 		).each { |e| ordered_sub_projects(e, opts) }
 		@ordered_sub_projects

@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.2.8'
+gem 'rails', '~> 3.2.12'
 
-gem 'mysql2'
+#gem 'mysql2'
+gem 'sqlite3'
 gem 'thin'
 
 # Gems used only for assets and not required
@@ -28,7 +29,7 @@ gem 'jquery-rails'
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
@@ -38,7 +39,7 @@ gem 'jquery-rails'
 group :development, :test do
 #   gem 'webrat'
 	gem "rspec-rails"
-	gem "ZenTest"
+#	gem "ZenTest"
 	gem "autotest-rails"
 	gem 'factory_girl_rails'
 	gem "inaction_mailer"
