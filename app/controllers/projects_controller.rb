@@ -104,6 +104,7 @@ class ProjectsController < ApplicationController
     @current_activity = CurrentActivity.new(
       :started => Time.now,
       :person_id => get_user.id,
+      :description => '', # sqlite requires a value here?!
       :project_id => params[:id]
     )
 
