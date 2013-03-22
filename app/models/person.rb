@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
   
   def update_project_positions(list)
     list.each_index { |ix| # the array items are in order. The positions need to be updated to match.
-      list[ix].update_attribute( :position, ix +1)
+      list[ix].update_column( :position, ix +1)
     }
   end
 
