@@ -20,6 +20,11 @@
     <%= select_tag "activity[project_id]", sub_projects_select(@activity.project) %>
   </div>
   <div class="field">
+    <%= f.label :started %><br />
+    <%= (@activity.stopped - @activity.minutes.minutes) %>
+  </div>
+  
+  <div class="field">
     <%= f.label :stopped %><br />
     <%= f.datetime_select :stopped %>
 (<%= get_user.local_time(@activity.stopped) %>)
