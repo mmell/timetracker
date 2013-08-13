@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308202859) do
+ActiveRecord::Schema.define(:version => 20130813181820) do
 
   create_table "activities", :force => true do |t|
     t.integer  "person_id",   :default => 0, :null => false
@@ -56,15 +57,6 @@ ActiveRecord::Schema.define(:version => 20110308202859) do
     t.boolean  "archived",    :default => false, :null => false
     t.text     "description",                    :null => false
     t.integer  "parent_id"
-  end
-
-  create_table "rights", :force => true do |t|
-    t.integer  "person_id",       :default => 0, :null => false
-    t.integer  "accessable_id",   :default => 0, :null => false
-    t.string   "accessable_type"
-    t.string   "right"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
 end
