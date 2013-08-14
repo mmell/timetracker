@@ -37,7 +37,7 @@ Now: <%= Time.now.utc %>
   </div>
   <div class="field">
     <%= f.label :description, "Activity Description" %><br />
-    <%= f.text_area_local :description %>
+    <%= f.text_area( :description, {:size => '64x9'} ) %>
   </div>
   <div class="actions">
     <%= f.submit %>

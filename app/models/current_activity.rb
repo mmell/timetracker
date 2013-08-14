@@ -3,6 +3,8 @@ require 'activity_time'
 class CurrentActivity < ActiveRecord::Base
   include ActivityTime
   
+  ParamAttributes = [ :person_id, :started, :description, :project_id ]
+
   belongs_to :project
   belongs_to :person
   

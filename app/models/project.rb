@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
   validate :parent_not_self
   
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :parent_id, :allow_nil => true # FIXME add scope of person? but there's no person owner
+  validates_uniqueness_of :name, conditions: -> { where(archived: false) }, :scope => :parent_id, :allow_nil => true # FIXME add scope of person? but there's no person owner
   
   after_initialize :defaults
   after_save :check_archived
@@ -19,6 +19,8 @@ class Project < ActiveRecord::Base
   scope :active, where(:archived => false)
   scope :archived, where(:archived => true)
 
+  ParamAttributes = [ :name, :url, :archived, :description, :parent_id ]
+  
   def parent_not_self 
     errors.add(:parent_id, :message => "Parent can't be self") if !new_record? and self.parent_id == self.id
   end
@@ -30,7 +32,18 @@ class Project < ActiveRecord::Base
   def check_archived
     if archived?
       project_positions.clear
+      projects.each { |e| e.archive }
+    else
+      parent.unarchive if parent
     end
+  end
+  
+  def unarchive
+    update_attributes(archived: false)
+  end
+  
+  def archive
+    update_attributes(archived: true)
   end
   
   def work_categories
@@ -66,7 +79,7 @@ class Project < ActiveRecord::Base
   end
 
   def minutes
-    @minutes ||= Activity.sum(:minutes, :conditions => "project_id=#{self.id}" )
+    @minutes ||= self.activities.sum(:minutes)
   end
   
   def hours

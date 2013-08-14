@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
   has_one :current_activity, :dependent => :destroy
   has_many :projects, :through => :activities, :order => "projects.name"
   has_one :project, :through => :current_activity
-  has_many :project_positions, :dependent => :destroy
+  has_many :project_positions, :dependent => :destroy, :order => :position
   has_many :priority_projects, :through => :project_positions, :source => :project
   
   validates_presence_of :name
@@ -12,6 +12,8 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of :email
   
   scope :priority, where(:archived => true)
+
+  ParamAttributes = [ :name, :email, :image_url, :time_zone]
 
   def local_time(t) 
     t.in_time_zone(time_zone)
@@ -23,18 +25,19 @@ class Person < ActiveRecord::Base
   end
 
   def shift_project_position(project, move_to)
-    list_position = move_to.to_i() -1
-    list = self.project_positions.dup
     pp = project_position(project)
-    list.delete(pp) if pp.position > 0
-
-    if list_position < 0 # the submitted move_to was 0
-      pp.destroy if pp.position > 0
+    pp.position = move_to.to_i() -1
+    new_project_positions = []
+    self.project_positions.each { |e| 
+      next if e == pp
+      new_project_positions << e
+    }
+    if pp.position < 0 # the submitted move_to was 0 which means delete_me
+      pp.destroy if pp.persisted?
     else
-      list.insert(list_position, pp)
+      new_project_positions.insert(pp.position, pp)
     end
-    # not sure compact is necessary except in the tests
-    update_project_positions( list.compact )
+    update_project_positions( new_project_positions.compact )
   end
   
   def update_project_positions(list)

@@ -1,5 +1,4 @@
 module ApplicationHelper
-  
   def project_select(project, selected_id = nil)
     selected = (selected_id and project.id == selected_id ? " selected='true'" : '')
     "<option value='#{project.id}'#{selected}>#{h project.fullname}</option>"    

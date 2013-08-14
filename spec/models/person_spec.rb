@@ -50,7 +50,7 @@ describe Person do
       subject.project_position(project0).position.should == 0
     end
 
-    it "resorts three projects" do
+    it "re-sorts three projects" do
       parent_project = FactoryGirl.create(:project)
       projects = [FactoryGirl.create(:project, :parent => parent_project)]
       FactoryGirl.create(:project_position, :project => projects[0], :person => subject, :position => 1)

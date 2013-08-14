@@ -1,3 +1,4 @@
-<h1>Listing Archived Projects</h1>
+<% projects = Project.archived.sort { |a, b| a.fullname <=> b.fullname } %>
+<h1>Listing Archived Projects (<%= projects.size %>)</h1>
 
-<%= render :partial => 'projects/sub_projects', :locals => { :projects => Project.archived } %>
+<%= render :partial => 'projects/sub_projects', :locals => { :projects => projects } %>

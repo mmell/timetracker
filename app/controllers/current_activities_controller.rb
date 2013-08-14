@@ -41,7 +41,7 @@ class CurrentActivitiesController < ApplicationController
   # POST /current_activities
   # POST /current_activities.xml
 #  def create
-#    @current_activity = CurrentActivity.new(params[:current_activity])
+#    @current_activity = CurrentActivity.new(permit_params)
 #
 #    respond_to do |format|
 #      if @current_activity.save
@@ -58,7 +58,7 @@ class CurrentActivitiesController < ApplicationController
   # PUT /current_activities/1.xml
   def update
     respond_to do |format|
-      if @current_activity.update_attributes(params[:current_activity])
+      if @current_activity.update_attributes(permit_params)
         format.html { redirect_to( edit_current_activity_url(@current_activity), :notice => 'Current activity was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -119,5 +119,9 @@ class CurrentActivitiesController < ApplicationController
     end
     @project = @current_activity.project
   end
+  
+  def permit_params
+    params.require(:current_activity).permit(CurrentActivity::ParamAttributes)
+  end 
   
 end

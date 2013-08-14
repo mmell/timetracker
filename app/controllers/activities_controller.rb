@@ -8,9 +8,7 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.xml
   def index
-    @activities = get_user.activities.find(:all, :conditions => "stopped > '#{Time.now.utc - 12.hours}'",
-      :order => "stopped DESC"
-    )
+    @activities = get_user.activities.where( "stopped > '#{Time.now.utc - 12.hours}'").order("stopped DESC").all
     @minutes_today = @activities.inject(0) { |memo, e| memo + e.minutes }
     @minutes_today += get_user.current_activity.minutes if get_user.current_activity
 
@@ -21,9 +19,7 @@ class ActivitiesController < ApplicationController
   end
 
   def all
-    @activities = get_user.activities.find(:all, :conditions => ["stopped > '#{(Time.now() - 31.days).strftime("%Y-%m-%d")}'"],
-      :order => "stopped DESC"
-    )
+    @activities = get_user.activities.where( "stopped > '#{(Time.now() - 31.days).strftime("%Y-%m-%d")}'").order("stopped DESC").all
 
     respond_to do |format|
       format.html # all.html.erb
@@ -61,7 +57,7 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.xml
   def create
-    @activity = get_user.activities.new(params[:activity])
+    @activity = get_user.activities.new(permit_params)
 
     respond_to do |format|
       if @activity.save
@@ -80,7 +76,7 @@ class ActivitiesController < ApplicationController
     @activity = get_user.activities.find(params[:id])
 
     respond_to do |format|
-      if @activity.update_attributes(params[:activity])
+      if @activity.update_attributes(permit_params)
         format.html { redirect_to( @activity.project, :notice => 'Activity was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -122,4 +118,8 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def permit_params
+    params.require(:activity).permit(Activity::ParamAttributes)
+  end 
+  
 end

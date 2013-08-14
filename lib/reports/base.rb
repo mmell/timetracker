@@ -25,14 +25,11 @@ module Reports
     end
 
     def project_activities(project)
-      Activity.find(:all, 
-        :conditions => [
+      Activity.where( [
           # adding 1.day to end_date to include the final hours of the requested day   
           "activities.stopped > ? and activities.stopped < ? and activities.project_id = ? and activities.person_id = ?", 
           @start_date, @end_date + 1.day, project.id, @user.id
-        ],
-        :include => :project,
-        :order => "stopped DESC"
+        ]).include(:project).order( "stopped DESC")
       )
     end
     

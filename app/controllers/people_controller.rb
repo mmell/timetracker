@@ -80,7 +80,7 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    @person = Person.new(params[:person])
+    @person = Person.new(permit_params)
 
     respond_to do |format|
       if @person.save
@@ -97,7 +97,7 @@ class PeopleController < ApplicationController
   # PUT /people/1.xml
   def update
     respond_to do |format|
-      if @person.update_attributes(params[:person])
+      if @person.update_attributes(permit_params)
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -130,6 +130,10 @@ class PeopleController < ApplicationController
     end
   end
 
+  def permit_params
+    params.require(:person).permit(Person::ParamAttributes)
+  end 
+  
   def get_person
     # @user comes from the session and may be different than the target person.
     # FIXME: enforce security

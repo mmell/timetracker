@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.xml
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(permit_params)
 
     respond_to do |format|
       if @project.save
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
   # PUT /projects/1.xml
   def update
     respond_to do |format|
-      if @project.update_attributes(params[:project])
+      if @project.update_attributes(permit_params)
         format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -121,8 +121,8 @@ class ProjectsController < ApplicationController
   
   def archive_toggle
     respond_to do |format|
-      if @project.update_column(:archived, !@project.archived)
-        format.html { redirect_to((@project.parent or root_path), :notice => "Project: #{@project.name} was successfully archived.") }
+      if @project.update_attributes(archived: !@project.archived?)
+        format.html { redirect_to((@project), :notice => "Project: #{@project.name} was successfully #{@project.archived? ? '' : 'un'}archived.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -130,6 +130,10 @@ class ProjectsController < ApplicationController
       end
     end
   end
+  
+  def permit_params
+    params.require(:project).permit(Project::ParamAttributes)
+  end 
   
   def get_project
     @project = Project.find(params[:id])
