@@ -11,7 +11,7 @@
   <tr valign='top' class='row<%= cycle(1, 2) %>'>
     <td><%= button_to('Start', start_activity_path(activity)) %></td>
     <td><%= link_to_projects(activity.project) %></td>
-    <td><%= activity.stopped.localtime %> (local)</td>
+    <td><%= activity.stopped.in_time_zone %> (<%= get_user.time_zone %>)</td>
     <td align='right'><%= activity.hours %></td>
     <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
   </tr>

@@ -5,12 +5,12 @@
 
 <p>
   <b>Project:</b>
-  <%= link_to_projects @activity.project %> <%= link_to_project_url(@activity.project) %> 
+  <%= link_to_projects @activity.project %> <%= link_to_project_url(@activity.project) %>
 </p>
 
 <p>
   <b>Stopped:</b>
-  <%= @activity.stopped.localtime %> (local)
+  <%= @activity.stopped.in_time_zone %> (<%= get_user.time_zone %>)
 </p>
 
 <p>

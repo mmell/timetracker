@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
   include ActivityTime
 
   before_filter :require_user
-  
+
   # GET /activities
   # GET /activities.xml
   def index
@@ -120,6 +120,6 @@ class ActivitiesController < ApplicationController
 
   def permit_params
     params.require(:activity).permit(Activity::ParamAttributes)
-  end 
-  
+  end
+
 end

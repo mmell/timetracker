@@ -10,7 +10,7 @@
 
 <p>
   <b>Started:</b>
-  <%= @current_activity.started.localtime %> (local)
+  <%= @current_activity.started.in_time_zone %> (<%= get_user.time_zone %>)
 </p>
 
 <p>

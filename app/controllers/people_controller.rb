@@ -1,13 +1,13 @@
 class PeopleController < ApplicationController
-  require 'reports' 
-  
+  require 'reports'
+
   before_filter :get_person, :require_user, :except => [:login, :index, :new, :create]
-    
+
   def reports
     unless params[:project_id]
       current_day = Date.current.day
-      if current_day < 15 
-        delta = current_day 
+      if current_day < 15
+        delta = current_day
         @end_date = Date.current() - delta.days # last day of the last month
         @start_date = @end_date - 14.days # the 15th of the previous month # FIXME
       else
@@ -20,16 +20,16 @@ class PeopleController < ApplicationController
     end
     @end_date = Time.parse("#{params[:until][:year]}-#{params[:until][:month]}-#{params[:until][:day]}")
     @start_date = Time.parse("#{params[:from][:year]}-#{params[:from][:month]}-#{params[:from][:day]}")
-    @project = Project.find(params[:project_id])  
-    
+    @project = Project.find(params[:project_id])
+
     report = "Reports::#{params[:format]}".constantize.new(@start_date, @end_date, @project, get_user )
-    send_data(report.render, 
+    send_data(report.render,
       :filename => report.file_name,
       :disposition => 'attachment', # default
       :type => 'application/octet-stream' # default
     )
   end
-  
+
   # GET /people
   # GET /people.xml
   def index
@@ -111,7 +111,7 @@ class PeopleController < ApplicationController
     project = Project.find(params[:project_id])
     redirect_opts = {}
     if project # FIXME: confirm that person has access to project
-      @person.shift_project_position(project, params[:move_to]) 
+      @person.shift_project_position(project, params[:move_to])
       redirect_opts[:notice] = "Successfully set the project priority."
     else
       redirect_opts[:alert] = "Project not found."
@@ -130,14 +130,19 @@ class PeopleController < ApplicationController
     end
   end
 
+  def time_zone
+    get_person.update_attributes(time_zone: params[:person][:time_zone])
+    redirect_to(:back)
+  end
+
   def permit_params
     params.require(:person).permit(Person::ParamAttributes)
-  end 
-  
+  end
+
   def get_person
     # @user comes from the session and may be different than the target person.
     # FIXME: enforce security
-    @person = Person.find(params[:id])
+    @person ||= Person.find(params[:id])
   end
   private :get_person
 

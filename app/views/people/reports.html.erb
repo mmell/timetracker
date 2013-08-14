@@ -6,7 +6,7 @@
   <%# select_tag "project_id", sub_projects_select(@project) %>
 
 	<select name='project_id' id='project_id'>
-	<%= options_from_collection_for_select(Project.root.active, :id, :name, @project) %>
+	<%= options_from_collection_for_select(Project.active.root.all, :id, :name, @project) %>
 	</select>
 
 <div class="field">
@@ -19,11 +19,11 @@
   <%= select_date(@end_date, :prefix => :until) %>
 </div>
 </div>
-	
+
 <div class="field">
   <%= label_tag( :format) %><br />
-  <%= select_tag "format", 
-		options_for_select(Reports::Formats) 
+  <%= select_tag "format",
+		options_for_select(Reports::Formats)
 		%>
 </div>
   <div class="actions">
