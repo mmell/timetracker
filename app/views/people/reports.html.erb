@@ -3,7 +3,6 @@
 <%= form_tag( ) do |f| %>
 <div class="field">
   <%= label_tag( :project) %><br />
-  <%# select_tag "project_id", sub_projects_select(@project) %>
 
 	<select name='project_id' id='project_id'>
 	<%= options_from_collection_for_select(Project.active.root.all, :id, :name, @project) %>

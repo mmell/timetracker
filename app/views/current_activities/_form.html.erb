@@ -19,7 +19,7 @@ working on
 
   <div class="field">
     <%= f.label :project_id %> (<%= link_to('Edit', edit_project_path(@current_activity.project) )%>)<br />
-    <%= select_tag "current_activity[project_id]", sub_projects_select(@current_activity.project) %>FIXME only show users' projects
+    <%= select_tag "current_activity[project_id]", sub_projects_select(@current_activity.project.ordered_sub_projects) %>FIXME only show users' projects
   </div>
   <div class="field">
     <%= f.label :started %><br />

@@ -15,9 +15,9 @@ class Project < ActiveRecord::Base
   after_initialize :defaults
   after_save :check_archived
 
-  scope :root, where(:parent_id => nil).order(:name)
-  scope :active, where(:archived => false).order(:name)
-  scope :archived, where(:archived => true).order(:name)
+  scope :root, -> { where(:parent_id => nil).order(:name) }
+  scope :active, -> { where(:archived => false).order(:name) }
+  scope :archived, -> { where(:archived => true).order(:name) }
 
   ParamAttributes = [ :name, :url, :archived, :description, :parent_id ]
 
@@ -85,6 +85,23 @@ class Project < ActiveRecord::Base
   def hours
     @hours ||= minutes / 60.0
     "%6.2f" % [ @hours ]
+  end
+
+  def self.fullname_sort(arr)
+    arr.sort { |a, b| a.fullname <=> b.fullname }
+  end
+
+  def parent_name
+    parent_id ? parent.fullname : 'None'
+  end
+
+  def ordered_sub_projects(project = self)
+    @ordered_sub_projects ||= [self]
+    project.projects.each { |e|
+      @ordered_sub_projects << e
+      ordered_sub_projects(e)
+    }
+    Project.fullname_sort(@ordered_sub_projects)
   end
 
 end

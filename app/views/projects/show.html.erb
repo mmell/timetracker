@@ -25,7 +25,7 @@
 <%= link_to 'Destroy', @project, :confirm => 'Are you sure?', :method => :delete %>
 
 <% unless @project.projects.empty? %><h2>Sub-Projects</h2>
-<%= render :partial => 'projects/sub_projects', :locals => { :projects => ordered_sub_projects(@project)} %>
+<%= render :partial => 'projects/sub_projects', :locals => { :projects => @project.ordered_sub_projects } %>
 <% end %>
 
 <h2>Activity</h2>

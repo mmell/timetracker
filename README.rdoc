@@ -1,0 +1,5 @@
+= TimeTracker
+
+A Rails app to track and report your activity times.
+
+Note: User login has not been secured.

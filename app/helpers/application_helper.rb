@@ -1,25 +1,12 @@
 module ApplicationHelper
   def project_select(project, selected_id = nil)
     selected = (selected_id and project.id == selected_id ? " selected='true'" : '')
-    "<option value='#{project.id}'#{selected}>#{h project.fullname}</option>"    
+    "<option value='#{project.id}'#{selected}>#{h project.fullname}</option>"
   end
 
-  def sub_projects_select(selected_id = nil, project = nil)
+  def sub_projects_select(projects, selected_id = nil)
     selected_id = selected_id.id if selected_id.is_a?(Project)
-    ordered_sub_projects(project).map { |e| project_select(e, selected_id) }.join().html_safe
-  end
-  
-  # ordered_sub_projects
-  #   will not find archived sub-projects of un-archived parents
-  #
-  def ordered_sub_projects(parent_project = nil, opts = {}) # FIXME, this belongs in the model
-    @ordered_sub_projects ||= []
-    @ordered_sub_projects << parent_project if parent_project
-    opts = { :archived => false }.merge(opts)
-    Project.where(archived: opts[:archived]).find_all_by_parent_id(parent_project, 
-			:order => "projects.name"                                                     
-		).each { |e| ordered_sub_projects(e, opts) }
-		@ordered_sub_projects
+    projects.map { |e| project_select(e, selected_id) }.join().html_safe
   end
 
   def link_to_projects(project)
@@ -31,20 +18,20 @@ module ApplicationHelper
     end
     a.join('::').html_safe
   end
-  
+
   def link_to_project_url(project)
     # FIXME is the url unsafe?
     project.url.blank? ? '' : "(#{link_to( h( project.url), project.url, { :target => 'project_url', :class => 'project_url'})})".html_safe
   end
-  
+
   def get_user
     controller.get_user
   end
-  
+
   def link_class(opts)
     current_page?(opts) ? 'current' : ''
   end
-  
+
   def truncate(s, n = 24)
 #    return s # truncating in the middle of a tag element, e.g. <p>, makes problems
     return s if s.length < n
