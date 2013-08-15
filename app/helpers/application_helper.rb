@@ -1,12 +1,22 @@
 module ApplicationHelper
-  def project_select(project, selected_id = nil)
-    selected = (selected_id and project.id == selected_id ? " selected='true'" : '')
+  def project_select_option(project, selected_id = nil)
+    selected = (project.id == selected_id ? ' selected="selected"' : '')
     "<option value='#{project.id}'#{selected}>#{h project.fullname}</option>"
   end
 
-  def sub_projects_select(projects, selected_id = nil)
-    selected_id = selected_id.id if selected_id.is_a?(Project)
-    projects.map { |e| project_select(e, selected_id) }.join().html_safe
+  def projects_select(projects, *select_options)
+    selected_id = nil
+    select_options.each { |e|
+      next unless e
+      if e.is_a?(Project)
+        selected_id = e.id
+        break
+      else
+        selected_id = e.to_i
+        break
+      end
+    }
+    Project.fullname_sort(projects).map { |e| project_select_option(e, selected_id) }.join().html_safe
   end
 
   def link_to_projects(project)
