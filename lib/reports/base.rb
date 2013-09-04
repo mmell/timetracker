@@ -27,7 +27,7 @@ module Reports
     def project_activities(project)
       Activity.includes(:project).order( "activities.stopped DESC").where( [
           # adding 1.day to end_date to include the final hours of the requested day
-          "activities.stopped > ? and activities.stopped < ? and activities.project_id = ? and activities.person_id = ?",
+          "activities.minutes > 1 and stopped > ? and activities.stopped < ? and activities.project_id = ? and activities.person_id = ?",
           @start_date, @end_date + 1.day, project.id, @user.id
         ]).all
     end
