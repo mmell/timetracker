@@ -68,7 +68,7 @@ class Project < ActiveRecord::Base
 
   def fullname
     if parent_id
-      "#{parent.fullname}::#{self.name}"
+      "#{parent.fullname}::#{self.name}" # recurse
     else
       "#{self.name}"
     end
