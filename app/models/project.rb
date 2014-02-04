@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Project'
-  has_many :projects, :order => :name, :foreign_key => :parent_id, :dependent => :destroy
-  has_many :activities, :order => :stopped, :dependent => :destroy
+  has_many :projects, -> { order(:name) }, :foreign_key => :parent_id, :dependent => :destroy
+  has_many :activities, -> { order(:stopped) }, :dependent => :destroy
   has_one :current_activity, :dependent => :destroy
   has_many :project_positions, :dependent => :destroy
 
